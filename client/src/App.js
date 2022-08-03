@@ -1,24 +1,26 @@
-import React from 'react';
-import 'semantic-ui-css/semantic.min.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
+import "antd/dist/antd.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+import Home from "./pages/Home";
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('id_token');
+  const token = localStorage.getItem("id_token");
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });
@@ -33,13 +35,13 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <Nav />
+          {/* <Nav /> */}
           <Routes>
             <Route
               path="/"
               element={<Home />}
             />
-            <Route
+            {/* <Route
               path="/:username"
               element={<Profile />}
             />
@@ -58,12 +60,12 @@ function App() {
             <Route
               path="/signup"
               element={<signupForm />}
-            />
+            /> */}
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Router>
-    </ApolloProvider>
+    // </ApolloProvider>
   );
 }
 
