@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
+const Recipe = require("./Recipe");
 
 const userSchema = new Schema({
   username: {
@@ -33,7 +34,13 @@ const userSchema = new Schema({
     required: true,
     minlength: 8,
   },
-  recipes: [
+  savedRecipes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Recipe",
+    },
+  ],
+  postedRecipes: [
     {
       type: Schema.Types.ObjectId,
       ref: "Recipe",
