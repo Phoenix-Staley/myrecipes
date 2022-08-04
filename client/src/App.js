@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
@@ -10,6 +10,9 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 import Home from "./pages/Home";
+import Nav from "./components/Nav";
+import LoginForm from "./pages/LoginForm";
+import SignupForm from "./pages/SignupForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -31,15 +34,17 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [theme, changeTheme] = useState("dark");
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <div>
-          {/* <Nav /> */}
+          <Nav theme={theme} />
           <Routes>
             <Route
               path="/"
-              element={<Home />}
+              element={<Home theme={theme} />}
             />
             {/* <Route
               path="/:username"
@@ -52,20 +57,20 @@ function App() {
             <Route
               path="/recipe/:recipeId"
               element={<Recipe />}
-            />
+            /> */}
             <Route
               path="/login"
-              element={<loginForm />}
+              element={<LoginForm />}
             />
             <Route
               path="/signup"
-              element={<signupForm />}
-            /> */}
+              element={<SignupForm />}
+            />
           </Routes>
           {/* <Footer /> */}
         </div>
       </Router>
-    // </ApolloProvider>
+    </ApolloProvider>
   );
 }
 
