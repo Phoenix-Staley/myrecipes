@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(19,56,59);
 }
 
 code {
@@ -18,4 +19,8 @@ code {
 
 .ant-menu-overflow {
   justify-content: flex-end;
+}
+
+.contentHolder {
+  width: 66vw;
 }
