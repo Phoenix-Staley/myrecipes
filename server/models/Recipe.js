@@ -32,11 +32,13 @@ const recipeSchema = new Schema({
     ref: "User",
     required: true,
   },
-  tags: {
-    type: Schema.Types.ObjectId,
-    ref: "Tag",
-    required: true,
-  },
+  tags: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Tag",
+      required: true,
+    },
+  ],
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);
