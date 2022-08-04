@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { Divider, List, Image  } from "antd";
+import { Divider, List  } from "antd";
 
 // import { QUERY_THOUGHTS } from "../utils/queries";
 
@@ -78,7 +78,7 @@ const Home = () => {
 
     return (
         <main>
-            <Image
+            <img
                 width={192}
                 src="/logo192.png"
                 className="logo"
