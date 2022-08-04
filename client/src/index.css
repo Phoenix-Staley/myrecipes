@@ -34,3 +34,14 @@ label {
   margin-left: 23vw;
   margin-right: 33vw;
 }
+
+.logo {
+  margin-left: 43vw;
+  margin-top: 5vh
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    margin-left: 35vw;
+  }
+}

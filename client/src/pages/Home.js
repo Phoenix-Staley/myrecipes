@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { Divider, List, Typography  } from "antd";
+import { Divider, List, Image  } from "antd";
 
 // import { QUERY_THOUGHTS } from "../utils/queries";
 
@@ -78,6 +78,11 @@ const Home = () => {
 
     return (
         <main>
+            <Image
+                width={192}
+                src="/logo192.png"
+                className="logo"
+            />
             <div style={styles.contentHolder} className="contentHolder">
                 <Divider orientation="left" style={styles.listTitle}>Recent Recipes</Divider>
                 <List
