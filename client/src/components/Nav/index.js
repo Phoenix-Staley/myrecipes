@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+// Styles used for this component
 const styles = {
     title: {
         position: "absolute",
@@ -15,13 +16,16 @@ const styles = {
     }
 }
 
+// Navigation options
 const items = [
     {
+        // How this is rendered
         label: (
             <Link to="/login">
                 Login
             </Link>
         ),
+        // How to refer to this option
         key: "login"
     },
     {
@@ -37,6 +41,7 @@ const items = [
 const Nav = ({ theme }) => {
   return (
     <div>
+        {/* Link to the homepage */}
         <Link to="/" style={styles.title} className="title">
             myrecipes
         </Link>
