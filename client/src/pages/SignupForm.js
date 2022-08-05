@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import React from "react";
 
 const styles = {
@@ -18,6 +18,7 @@ const SignupForm = () => {
 
   return (
     <div className="formHolder">
+      
       <Form
       name="basic"
       labelCol={{
@@ -34,6 +35,7 @@ const SignupForm = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
+      <h3 className="formHeader">Sign Up:</h3>
       <Form.Item
         label="Email"
         name="email"
