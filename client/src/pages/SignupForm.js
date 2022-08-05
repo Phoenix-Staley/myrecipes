@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
 const styles = {
   form: {
@@ -8,12 +8,29 @@ const styles = {
 }
 
 const SignupForm = () => {
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+    username: "",
+    firstName: "",
+    lastName: "",
+    password: ""
+  });
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
   return (
@@ -38,7 +55,6 @@ const SignupForm = () => {
       <h3 className="formHeader">Sign Up:</h3>
       <Form.Item
         label="Email"
-        name="email"
         hasFeedback
         rules={[
           {
@@ -51,12 +67,11 @@ const SignupForm = () => {
           },
         ]}
       >
-        <Input />
+        <Input name="email" onChange={handleChange} />
       </Form.Item>
 
       <Form.Item
         label="Username"
-        name="username"
         hasFeedback
         rules={[
           {
@@ -73,12 +88,11 @@ const SignupForm = () => {
           })
         ]}
       >
-        <Input />
+        <Input name="username" onChange={handleChange} />
       </Form.Item>
 
       <Form.Item
         label="First Name"
-        name="firstName"
         hasFeedback
         rules={[
           {
@@ -87,12 +101,11 @@ const SignupForm = () => {
           },
         ]}
       >
-        <Input />
+        <Input name="firstName" onChange={handleChange} />
       </Form.Item>
 
       <Form.Item
         label="Last Name"
-        name="lastName"
         hasFeedback
         rules={[
           {
@@ -101,8 +114,9 @@ const SignupForm = () => {
           },
         ]}
       >
-        <Input />
+        <Input name="lastName" onChange={handleChange} />
       </Form.Item>
+
       <Form.Item
         label="Password"
         name="password"
@@ -122,12 +136,12 @@ const SignupForm = () => {
           })
         ]}
       >
-        <Input.Password />
+        <Input.Password name="password" onChange={handleChange} />
       </Form.Item>
 
       <Form.Item
-        name="confirm"
         label="Confirm Password"
+        name="confirm"
         dependencies={["password"]}
         hasFeedback
         rules={[
