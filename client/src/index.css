@@ -46,6 +46,21 @@ label {
   margin: 4vh 8vw;
 }
 
+.invalidFormAlert div {
+  background-color: rgb(14,46,49);
+  color: white;
+  border: 0px;
+}
+
+.invalidFormAlert div button {
+  background-color: darkslategray;
+  color: white;
+}
+
+.invalidFormAlert div button:hover {
+  background-color: rgb(72, 72, 72);
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     margin-left: 35vw;
