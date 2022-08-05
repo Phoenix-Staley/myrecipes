@@ -40,6 +40,12 @@ label {
   margin-top: 5vh
 }
 
+.formHeader {
+  color: white;
+  font-size: xx-large;
+  margin: 4vh 8vw;
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     margin-left: 35vw;
