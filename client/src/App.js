@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Nav from "./components/Nav";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
+import SingleRecipe from "./pages/SingleRecipe";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -60,11 +61,11 @@ function App() {
             <Route
               path="/me"
               element={<Profile />}
-            />
+            /> */}
             <Route
               path="/recipe/:recipeId"
-              element={<Recipe />}
-            /> */}
+              element={<SingleRecipe />}
+            />
             <Route
               path="/login"
               element={<LoginForm />}
