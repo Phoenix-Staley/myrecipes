@@ -70,6 +70,24 @@ label {
   margin-left: 33%;
 }
 
+.creator {
+  color: #ffc370 !important;
+}
+
+.creator:hover {
+  color: #cd9c57 !important;
+  text-decoration: underline;
+}
+
+.tag a {
+  color: #ffc370;
+}
+
+.tag a:hover {
+  color: #cd9c57;
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     margin-left: 35vw;
