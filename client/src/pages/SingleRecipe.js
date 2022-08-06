@@ -1,10 +1,17 @@
-import React from "react";
-import { Link, useParams } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import Auth from "../utils/auth";
 
 import { Divider, List  } from "antd";
 
 // import { QUERY_RECIPES } from "../utils/queries";
+
+const colors = {
+    lightGold: "#ECB365",
+    darkBlue: "#041C32",
+    textColor: "white"
+}
 
 // The styles for various elements in this page
 const styles = {
@@ -38,24 +45,50 @@ const styles = {
     fullRecipe: {
         display: "flex",
         flexDirection: "column",
-        height: "120vh",
+        minHeight: "120vh",
         justifyContent: "flex-start",
         paddingTop: "46px",
-        margin: "0 auto",
-        backgroundColor: "rgb(66, 61, 58)",
-        color: "white"
+        margin: "5vh auto",
+        backgroundColor: "#064663",
+        color: colors.textColor,
+        padding: "10vh 5vw"
     },
     image: {
-        marginLeft: "10%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: "5%",
+        transform: "scale(2)",
         display: "inline",
-        transform: "translateY(9vh)"
+        border: `ridge 3px ${colors.darkBlue}`
     },
     recipeTitle: {
         fontSize: "xx-large",
-        color: "white",
-        marginTop: "2vh",
-        marginLeft: "45%",
+        color: colors.lightGold,
+        margin: "2vh auto",
+        marginBottom: "0",
         display: "inline"
+    },
+    creatorLink: {
+        margin: "0 auto",
+        fontSize: "larger",
+        marginBottom: "2vh",
+        color: colors.textColor
+    },
+    sectionTitle: {
+        fontSize: "xx-large",
+        margin: "0 auto",
+        color: colors.lightGold
+    },
+    description: {
+        fontSize: "x-large"
+    },
+    tags: {
+        fontSize: "larger",
+        margin: "1vh auto",
+        marginBottom: "5vh"
+    },
+    ingredients: {
+        fontSize: "x-large"
     }
 }
 
@@ -93,17 +126,40 @@ const Home = () => {
                     style={styles.image}
                 />
                 <h3 style={styles.recipeTitle}>{currentRecipe.title}</h3>
-                <Divider orientation="left" style={styles.listTitle}>Recent Recipes</Divider>
-                <List
-                    style={styles.recipeList}
-                    bordered
-                    dataSource={data}
-                    renderItem={(item) => (
-                        <List.Item style={styles.recipeItem}>
-                            <Link to={`/recipes/${item.id}`} style={styles.recipeItem}>{item.title} -- {item.tags[0]}</Link>
-                        </List.Item>
+                <Link
+                    to={`/user/${currentRecipe.creator.username}`}
+                    style={styles.creatorLink}
+                    className="creator"
+                >
+                    {currentRecipe.creator.username}
+                </Link>
+
+                <h4 style={styles.sectionTitle}>Description</h4>
+                <p style={styles.description}>{currentRecipe.description}</p>
+
+                <h4 style={styles.sectionTitle}>Tags</h4>
+                <p style={styles.tags}>
+                    {currentRecipe.tags.map(
+                        (tag, i) => <span className="tag" key={i}>
+                        {i > 0 && ", "}
+                        <Link to={`/search/${tag}`}>{tag}</Link>
+                        </span>
                     )}
-                />
+                </p>
+
+                <h3 style={styles.sectionTitle}>Ingredients</h3>
+                <ul style={styles.ingredients}>
+                    {currentRecipe.ingredients.map(
+                        (ingredient, i) => <li key={i}>{ingredient}</li>
+                    )}
+                </ul>
+
+                <h3 style={styles.sectionTitle}>Directions</h3>
+                <ul style={styles.ingredients}>
+                    {currentRecipe.steps.map(
+                        (step, i) => <li key={i}>{step}</li>
+                    )}
+                </ul>
             </div>
         </main>
     );

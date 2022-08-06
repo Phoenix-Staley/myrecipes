@@ -38,7 +38,7 @@ const client = new ApolloClient({
 
 const styles = {
   body: {
-    backgroundColor: "rgb(34,71,79)",
+    backgroundColor: "#04293A",
     minHeight: "100vh",
     padding: "1vh 0"
   }
@@ -58,7 +58,7 @@ function App() {
               element={<Home theme={theme} />}
             />
             {/* <Route
-              path="/:username"
+              path="/user/:username"
               element={<Profile />}
             />
             <Route
