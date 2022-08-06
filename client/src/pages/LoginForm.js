@@ -1,5 +1,6 @@
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -118,6 +119,9 @@ const SignupForm = () => {
           </Button>
         </Form.Item>
       </Form>
+      <h3 className="authLink">
+        Don't have an account? <Link to="/signup">Sign up instead</Link>
+      </h3>
       <Modal title="Wrong Email or Password" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} className="invalidFormAlert">
         <p>Please enter a valid email and password, then try again.</p>
       </Modal>

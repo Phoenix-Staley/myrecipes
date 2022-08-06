@@ -1,5 +1,6 @@
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
@@ -209,6 +210,9 @@ const SignupForm = () => {
           </Button>
         </Form.Item>
       </Form>
+      <h3 className="authLink">
+        Already have an account? <Link to="/login">Login instead</Link>
+      </h3>
       <Modal title="Invalid Credentials" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} className="invalidFormAlert">
         <p>Either this username and/or email has already been taken, or you have entered invalid credentials. Please try again.</p>
       </Modal>
