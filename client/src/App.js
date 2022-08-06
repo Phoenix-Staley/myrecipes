@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Nav from "./components/Nav";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
+import SingleRecipe from "./pages/SingleRecipe";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -33,13 +34,20 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const styles = {
+  body: {
+    backgroundColor: "rgb(34,71,79)",
+    minHeight: "100vh"
+  }
+}
+
 function App() {
   const [theme, changeTheme] = useState("dark");
 
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
+        <div style={styles.body}>
           <Nav theme={theme} />
           <Routes>
             <Route
@@ -53,11 +61,11 @@ function App() {
             <Route
               path="/me"
               element={<Profile />}
-            />
+            /> */}
             <Route
               path="/recipe/:recipeId"
-              element={<Recipe />}
-            /> */}
+              element={<SingleRecipe />}
+            />
             <Route
               path="/login"
               element={<LoginForm />}

@@ -8,6 +8,7 @@ const typeDefs = gql`
 
   type User {
     _id: ID
+    username: String
     firstName: String
     lastName: String
     email: String
@@ -16,7 +17,7 @@ const typeDefs = gql`
   }
 
   type Recipe {
-    _id: id
+    _id: ID
     description: String
     title: String
     ingredients: [String]
@@ -33,6 +34,14 @@ const typeDefs = gql`
 
   type Query {
     user: User
+    recipes: [Recipe]
+    recipe(recipeId: ID!): Recipe
+    taggedRecipes(tagId: ID!): [Recipe]
+    tags: [Tag]
+
+    #recipe(userId: ID!): [Recipe]
+    #recipe(tagId: ID!): [Recipe]
+    #commented out the above two queries, because they were throwing an error when the server starts up "Error: Field "Query.recipe" can only be defined once."
   }
 
   type Mutation {
@@ -41,8 +50,20 @@ const typeDefs = gql`
       lastName: String!
       email: String!
       password: String!
+      username: String!
     ): Auth
     login(email: String!, password: String!): Auth
+    postRecipe(
+      userId: ID!
+      description: String!
+      title: String!
+      ingredients: [String]
+      steps: [String]
+      image: [String]
+      creator: ID!
+      tags: [String]
+    ): Recipe
+    saveRecipe(userId: ID!, recipeId: ID!): User
   }
 `;
 
