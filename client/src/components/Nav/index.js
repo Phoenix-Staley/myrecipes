@@ -65,6 +65,12 @@ const loggedInItems = [
         ),
         // How to refer to this option
         key: "profile"
+    },
+    {
+        label: (
+            <btn onClick={Auth.logout}>Logout</btn>
+        ),
+        key: "logout"
     }
 ];
 
