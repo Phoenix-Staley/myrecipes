@@ -58,7 +58,7 @@ const typeDefs = gql`
       description: String!
       title: String!
       ingredients: [String]
-      steps: [string]
+      steps: [String]
       image: [String]
       creator: ID!
       tags: [String]
