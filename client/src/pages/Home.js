@@ -86,13 +86,12 @@ const Home = () => {
             <div style={styles.contentHolder} className="contentHolder">
                 <Divider orientation="left" style={styles.listTitle}>Recent Recipes</Divider>
                 <List
-                    header={<div>Recipes</div>}
                     style={styles.recipeList}
                     bordered
                     dataSource={data}
                     renderItem={(item) => (
                         <List.Item style={styles.recipeItem}>
-                            <Link to={`/recipes/${item.id}`} style={styles.recipeItem}>{item.title} -- {item.tags[0]}</Link>
+                            <Link to={`/recipe/${item._id}`} style={styles.recipeItem}>{item.title} -- {item.tags[0]}</Link>
                         </List.Item>
                     )}
                 />

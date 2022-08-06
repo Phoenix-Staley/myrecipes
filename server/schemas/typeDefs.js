@@ -36,6 +36,9 @@ const typeDefs = gql`
     user: User
     recipes: [Recipe]
     recipe(recipeId: ID!): Recipe
+    taggedRecipes(tagId: ID!): [Recipe]
+    tags: [Tag]
+
     #recipe(userId: ID!): [Recipe]
     #recipe(tagId: ID!): [Recipe]
     #commented out the above two queries, because they were throwing an error when the server starts up "Error: Field "Query.recipe" can only be defined once."
@@ -50,6 +53,17 @@ const typeDefs = gql`
       username: String!
     ): Auth
     login(email: String!, password: String!): Auth
+    postRecipe(
+      userId: ID!
+      description: String!
+      title: String!
+      ingredients: [String]
+      steps: [String]
+      image: [String]
+      creator: ID!
+      tags: [String]
+    ): Recipe
+    saveRecipe(userId: ID!, recipeId: ID!): User
   }
 `;
 
