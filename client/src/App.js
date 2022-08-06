@@ -39,7 +39,8 @@ const client = new ApolloClient({
 const styles = {
   body: {
     backgroundColor: "rgb(34,71,79)",
-    minHeight: "100vh"
+    minHeight: "100vh",
+    padding: "1vh 0"
   }
 }
 
@@ -49,8 +50,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
+        <Nav theme={theme} />
         <div style={styles.body}>
-          <Nav theme={theme} />
           <Routes>
             <Route
               path="/"
@@ -77,8 +78,8 @@ function App() {
               element={<SignupForm />}
             />
           </Routes>
-          {/* <Footer /> */}
         </div>
+        {/* <Footer /> */}
       </Router>
     </ApolloProvider>
   );
