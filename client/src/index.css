@@ -5,9 +5,64 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(19,56,59);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+label {
+  color: white !important;
+}
+
+.title:hover {
+  text-decoration: underline wavy white 1px;
+}
+
+.ant-menu-overflow {
+  justify-content: flex-end;
+}
+
+.contentHolder {
+  width: 66vw;
+}
+
+.formHolder {
+  width: 40vw;
+  margin-left: 23vw;
+  margin-right: 33vw;
+}
+
+.logo {
+  margin-left: 43vw;
+  margin-top: 5vh
+}
+
+.formHeader {
+  color: white;
+  font-size: xx-large;
+  margin: 4vh 8vw;
+}
+
+.invalidFormAlert div {
+  background-color: rgb(14,46,49);
+  color: white;
+  border: 0px;
+}
+
+.invalidFormAlert div button {
+  background-color: darkslategray;
+  color: white;
+}
+
+.invalidFormAlert div button:hover {
+  background-color: rgb(72, 72, 72);
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    margin-left: 35vw;
+  }
 }
