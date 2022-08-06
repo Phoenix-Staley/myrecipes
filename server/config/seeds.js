@@ -5,11 +5,11 @@ db.once("open", async () => {
   await User.deleteMany();
 
   const seedUser1 = await User.create({
-    username: "pamWash",
-    firstName: "Pamela",
-    lastName: "Washington",
-    email: "pamela@testmail.com",
-    password: "password12345",
+    username: "demoUser",
+    firstName: "Demo",
+    lastName: "User",
+    email: "demo@user.com",
+    password: "password",
     savedRecipes: [],
     postedRecipes: [],
   });
@@ -73,16 +73,20 @@ db.once("open", async () => {
       tags: [tags[8]._id, tags[5]._id],
     },
     {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor lectus nibh. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.",
-      title: "Blueberry Scones",
+      description: "Buttery, crumbly, flaky scones",
+      title: "Blueberry Scones w/ Icing",
       ingredients: [
-        "AP Flour",
-        "Granulated Sugar",
-        "Baking Powder",
-        "Ground Cinnamon",
-        "Salt",
-        "Unsalted Butter",
+        "2 cups AP Flour",
+        "1/2 cup Granulated Sugar",
+        "2 1/2 tsp Baking Powder",
+        "1 tsp Ground Cinnamon",
+        "1/2 tsp Salt",
+        "1/2 cup Frozen Unsalted Butter",
+        "1/2 cup Heavy Cream",
+        "1 Large Egg",
+        "1 1/2 tsp Pure Vanilla Extract",
+        "1 cup Blueberries",
+        "Vanilla Icing",
       ],
       steps: ["step 1", "step 2", "step 3"],
       image:
@@ -104,8 +108,8 @@ db.once("open", async () => {
     {
       description: "Soft avocado sliced on a piece of whole-grain toast",
       title: "World's Best Avocado Toast",
-      ingredients: ["Avocado", "Toast"],
-      steps: ["Spread avocado on toast"],
+      ingredients: ["Avocado", "Toast", "Flaky Salt"],
+      steps: ["Spread avocado on toast", "Sprinkle salt on avocado"],
       image:
         "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/Avocado_toast.png",
       creator: seedUser2._id,
