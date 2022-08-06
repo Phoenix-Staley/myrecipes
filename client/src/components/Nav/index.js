@@ -68,7 +68,7 @@ const loggedInItems = [
     },
     {
         label: (
-            <btn onClick={Auth.logout}>Logout</btn>
+            <a onClick={Auth.logout}>Logout</a>
         ),
         key: "logout"
     }

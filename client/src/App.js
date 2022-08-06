@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Redirect } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,6 +8,8 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+
+import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
@@ -64,7 +66,7 @@ function App() {
             /> */}
             <Route
               path="/recipe/:recipeId"
-              element={<SingleRecipe />}
+              element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
             />
             <Route
               path="/login"
