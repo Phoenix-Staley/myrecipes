@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
 
-import { Divider, List  } from "antd";
+import { Button  } from "antd";
 
 // import { QUERY_RECIPES } from "../utils/queries";
 
@@ -87,10 +87,17 @@ const styles = {
     },
     divider: {
         width: "100%"
+    },
+    saveBtn: {
+        width: "15%",
+        backgroundColor: "#46c275",
+        color: "black",
+        border: "0px",
+        margin: "0 auto"
     }
 }
 
-const Home = () => {
+const Recipe = () => {
 //   const { loading, data } = useQuery(QUERY_RECIPES);
 //   const recipes = data?.recipes || [];
     const { recipeId } = useParams();
@@ -135,7 +142,8 @@ const Home = () => {
                     {currentRecipe.creator.username}
                 </Link>
                 
-                <h4 style={styles.sectionTitle}>Tags</h4>
+                <Button style={styles.saveBtn}>Save</Button>
+                
                 <p style={styles.tags}>
                     {currentRecipe.tags.map(
                         (tag, i) => <span className="tag" key={i}>
@@ -214,4 +222,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Recipe;
