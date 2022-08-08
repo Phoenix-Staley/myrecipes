@@ -24,7 +24,8 @@ const styles = {
         margin: "5vh auto",
         backgroundColor: "#064663",
         color: colors.textColor,
-        padding: "10vh 5vw"
+        padding: "10vh 5vw",
+        borderRadius: "10px"
     },
     image: {
         marginLeft: "auto",
@@ -32,7 +33,8 @@ const styles = {
         marginBottom: "5%",
         transform: "scale(2)",
         display: "inline",
-        border: `ridge 3px ${colors.darkBlue}`
+        border: `ridge 3px ${colors.darkBlue}`,
+        borderRadius: "5px"
     },
     recipeTitle: {
         fontSize: "xx-large",
@@ -82,6 +84,9 @@ const styles = {
     },
     hasColoredText: {
         color: colors.lightGold
+    },
+    divider: {
+        width: "100%"
     }
 }
 
@@ -158,7 +163,7 @@ const Home = () => {
                         />
                     </div>
                     <div style={styles.checkbox}>
-                        <h3 style={styles.hasColoredText}>Steps</h3>
+                        <h3 style={styles.hasColoredText}>Directions</h3>
                         <input
                             type="checkbox"
                             defaultChecked={areStepsVisible}
@@ -170,6 +175,7 @@ const Home = () => {
                 {/* Only render description is isDescVisible is true */}
                 {isDescVisible ? (
                     <>
+                        <hr style={styles.divider} />
                         <h4 style={styles.sectionTitle}>Description</h4>
                         <p style={styles.description}>{currentRecipe.description}</p>
                     </>
@@ -180,6 +186,7 @@ const Home = () => {
                 {/* Only render ingredients if areIngrVisible is true */}
                 {areIngrVisible ? (
                     <>
+                        <hr style={styles.divider} />
                         <h3 style={styles.sectionTitle}>Ingredients</h3>
                         <ul style={styles.ingredients}>
                             {currentRecipe.ingredients.map(
@@ -192,6 +199,7 @@ const Home = () => {
                 {/* Only render ingredients if areIngrVisible is true */}
                 {areStepsVisible ? (
                     <>
+                        <hr style={styles.divider} />
                         <h3 style={styles.sectionTitle}>Directions</h3>
                         <ul style={styles.ingredients}>
                             {currentRecipe.steps.map(
