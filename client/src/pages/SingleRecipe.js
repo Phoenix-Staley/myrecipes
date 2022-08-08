@@ -15,33 +15,6 @@ const colors = {
 
 // The styles for various elements in this page
 const styles = {
-    contentStyle: {
-        height: "260px",
-        color: "#fff",
-        lineHeight: "160px",
-        textAlign: "center",
-        background: "#364d79",
-    },
-    contentHolder: {
-        display: "flex",
-        flexDirection: "column",
-        height: "120vh",
-        justifyContent: "flex-start",
-        paddingTop: "46px",
-        margin: "0 auto"
-    },
-    listTitle: {
-        color: "white"
-    },
-    recipeList: {
-        backgroundColor: "cadetblue",
-        fontWeight: "bold",
-        textDecoration: "none"
-    },
-    recipeItem: {
-        color: "black",
-        textDecoration: "underline"
-    },
     fullRecipe: {
         display: "flex",
         flexDirection: "column",
@@ -89,6 +62,26 @@ const styles = {
     },
     ingredients: {
         fontSize: "x-large"
+    },
+    checkboxHolder: {
+        display: "flex",
+        flexDirection: "flex-row",
+        margin: "0 auto",
+        width: "30%",
+        padding: "1%",
+        justifyContent: "center",
+        backgroundColor: colors.darkBlue,
+        borderRadius: "10px",
+        marginBottom: "3%"
+    },
+    checkbox: {
+        padding: "0 3%",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center"
+    },
+    hasColoredText: {
+        color: colors.lightGold
     }
 }
 
@@ -96,6 +89,9 @@ const Home = () => {
 //   const { loading, data } = useQuery(QUERY_RECIPES);
 //   const recipes = data?.recipes || [];
     const { recipeId } = useParams();
+    const [isDescVisible, setIsDescVisible] = useState(true);
+    const [areIngrVisible, setAreIngrVisible] = useState(true);
+    const [areStepsVisible, setAreStepsVisible] = useState(true);
 
     const data = [
         {
@@ -133,10 +129,7 @@ const Home = () => {
                 >
                     {currentRecipe.creator.username}
                 </Link>
-
-                <h4 style={styles.sectionTitle}>Description</h4>
-                <p style={styles.description}>{currentRecipe.description}</p>
-
+                
                 <h4 style={styles.sectionTitle}>Tags</h4>
                 <p style={styles.tags}>
                     {currentRecipe.tags.map(
@@ -147,19 +140,67 @@ const Home = () => {
                     )}
                 </p>
 
-                <h3 style={styles.sectionTitle}>Ingredients</h3>
-                <ul style={styles.ingredients}>
-                    {currentRecipe.ingredients.map(
-                        (ingredient, i) => <li key={i}>{ingredient}</li>
-                    )}
-                </ul>
+                <div style={styles.checkboxHolder}>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Description</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={isDescVisible}
+                            onChange={(e) => setIsDescVisible(e.target.checked)}
+                        />
+                    </div>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Ingredients</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={areIngrVisible}
+                            onChange={(e) => setAreIngrVisible(e.target.checked)}
+                        />
+                    </div>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Steps</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={areStepsVisible}
+                            onChange={(e) => setAreStepsVisible(e.target.checked)}
+                        />
+                    </div>
+                </div>
 
-                <h3 style={styles.sectionTitle}>Directions</h3>
-                <ul style={styles.ingredients}>
-                    {currentRecipe.steps.map(
-                        (step, i) => <li key={i}>{step}</li>
-                    )}
-                </ul>
+                {/* Only render description is isDescVisible is true */}
+                {isDescVisible ? (
+                    <>
+                        <h4 style={styles.sectionTitle}>Description</h4>
+                        <p style={styles.description}>{currentRecipe.description}</p>
+                    </>
+                ) : <></>}
+
+                
+
+                {/* Only render ingredients if areIngrVisible is true */}
+                {areIngrVisible ? (
+                    <>
+                        <h3 style={styles.sectionTitle}>Ingredients</h3>
+                        <ul style={styles.ingredients}>
+                            {currentRecipe.ingredients.map(
+                                (ingredient, i) => <li key={i}>{ingredient}</li>
+                            )}
+                        </ul>
+                    </>
+                ) : <></>}
+
+                {/* Only render ingredients if areIngrVisible is true */}
+                {areStepsVisible ? (
+                    <>
+                        <h3 style={styles.sectionTitle}>Directions</h3>
+                        <ul style={styles.ingredients}>
+                            {currentRecipe.steps.map(
+                                (step, i) => <li key={i}>{step}</li>
+                            )}
+                        </ul>
+                    </>
+                ) : <></>}
+                
             </div>
         </main>
     );
