@@ -67,6 +67,8 @@ label {
 
 /* This is used for the "Sign up instead" and "Log in instead" h3 elements */
 .authLink {
+  color:white;
+  font-weight: 400;
   margin-left: 33%;
 }
 
