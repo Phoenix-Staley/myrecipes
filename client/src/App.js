@@ -13,6 +13,8 @@ import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
+// import Profile from "./pages/Profile";
+import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
@@ -55,7 +57,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Home theme={theme} />}
+              element={<Home />}
             />
             {/* <Route
               path="/user/:username"
@@ -77,6 +79,10 @@ function App() {
               path="/signup"
               element={<SignupForm />}
             />
+            <Route 
+                path="*" 
+                element={<NoMatch />} 
+              />
           </Routes>
         </div>
         {/* <Footer /> */}
