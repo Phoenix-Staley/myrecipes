@@ -5,6 +5,7 @@ const { authMiddleware } = require("./utils/auth");
 
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
+const createSession = require("./utils/stripe");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -23,6 +24,15 @@ if (process.env.NODE_ENV === "production") {
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
+app.post("/create-session", async (req, res) => {
+  try {
+    data = await createSession(req);
+    res.send(data);
+  } catch {
+    res.status(500).json({ error: "error in Stripe connection" });
+  }
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema

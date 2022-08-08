@@ -14,6 +14,7 @@ import Nav from "./components/Nav";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
+import Donate from "./pages/Donate";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -37,9 +38,9 @@ const client = new ApolloClient({
 const styles = {
   body: {
     backgroundColor: "rgb(34,71,79)",
-    minHeight: "100vh"
-  }
-}
+    minHeight: "100vh",
+  },
+};
 
 function App() {
   const [theme, changeTheme] = useState("dark");
@@ -50,10 +51,7 @@ function App() {
         <div style={styles.body}>
           <Nav theme={theme} />
           <Routes>
-            <Route
-              path="/"
-              element={<Home theme={theme} />}
-            />
+            <Route path="/" element={<Home theme={theme} />} />
             {/* <Route
               path="/:username"
               element={<Profile />}
@@ -62,18 +60,10 @@ function App() {
               path="/me"
               element={<Profile />}
             /> */}
-            <Route
-              path="/recipe/:recipeId"
-              element={<SingleRecipe />}
-            />
-            <Route
-              path="/login"
-              element={<LoginForm />}
-            />
-            <Route
-              path="/signup"
-              element={<SignupForm />}
-            />
+            <Route path="/recipe/:recipeId" element={<SingleRecipe />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/donate" element={<Donate />} />
           </Routes>
           {/* <Footer /> */}
         </div>
