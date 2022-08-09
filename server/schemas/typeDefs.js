@@ -32,11 +32,23 @@ const typeDefs = gql`
     user: User
   }
 
+  input recipeInput {
+    description: String!
+    title: String!
+    ingredients: [String!]
+    steps: [String!]
+    image: String
+    creator: ID!
+    tags: [Tag]
+  }
+
+#need to add user query to pull other profile data. findby username
   type Query {
-    user: User
-    recipes: [Recipe]
-    recipe(recipeId: ID!): Recipe
-    taggedRecipes(tagId: ID!): [Recipe]
+    myself(_id: ID!): User
+    user(_id: ID!): User
+    allRecipes(offset: 0 limit: 25): [Recipe]
+    recipeById(_id: ID!): Recipe
+    recipeByTag(tag: String!): [Recipe]
     tags: [Tag]
 
     #recipe(userId: ID!): [Recipe]
@@ -53,17 +65,9 @@ const typeDefs = gql`
       username: String!
     ): Auth
     login(email: String!, password: String!): Auth
-    postRecipe(
-      userId: ID!
-      description: String!
-      title: String!
-      ingredients: [String]
-      steps: [String]
-      image: [String]
-      creator: ID!
-      tags: [String]
-    ): Recipe
+    postRecipe(recipeData: recipeInput): User
     saveRecipe(userId: ID!, recipeId: ID!): User
+    addTag(name: String!): Tag
   }
 `;
 
