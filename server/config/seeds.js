@@ -29,18 +29,18 @@ db.once("open", async () => {
   await Tag.deleteMany();
 
   const tags = await Tag.insertMany([
-    { name: "Vegan" },
-    { name: "Weeknight Dinner" },
-    { name: "Healthy" },
-    { name: "Vegetarian" },
-    { name: "Baking" },
-    { name: "Easy to Save Leftovers" },
-    { name: "Burger" },
-    { name: "Western" },
-    { name: "Dinner" },
-    { name: "Lunch" },
-    { name: "Breakfast" },
-    { name: "Dessert" },
+    { name: "vegan" },
+    { name: "weeknight dinner" },
+    { name: "healthy" },
+    { name: "vegetarian" },
+    { name: "baking" },
+    { name: "easy to save leftovers" },
+    { name: "burger" },
+    { name: "western" },
+    { name: "dinner" },
+    { name: "lunch" },
+    { name: "breakfast" },
+    { name: "dessert" },
   ]);
 
   console.log("tags seeded");
