@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_MYSELF = gql`
-  {
     user {
       _id
       username
@@ -37,11 +36,9 @@ export const QUERY_MYSELF = gql`
         }
       }
     }
-  }
 `;
 
 export const QUERY_USER = gql`
-  {
     user {
       _id
       username
@@ -63,11 +60,9 @@ export const QUERY_USER = gql`
         }
       }
     }
-  }
 `;
 
 export const QUERY_ALLRECIPES = gql`
-  {
     allRecipes {
       _id
       description
@@ -82,11 +77,10 @@ export const QUERY_ALLRECIPES = gql`
         name
       }
     }
-  }
 `;
 
 export const QUERY_RECIPEBYID = gql`
-  {
+  query recipeByID($recipeId: ID!) {
     recipeById(recipeId: $recipeId) {
       _id
       description
@@ -104,12 +98,9 @@ export const QUERY_RECIPEBYID = gql`
   }
 `;
 
-// chane tagid to tagname,
-//add a query for myself
-
 export const QUERY_RECIPESBYTAG = gql`
-  {
-    recipesByTag(tagId: $tagId) {
+  query recipesByTag($tag: String!) {
+    recipesByTag(tag: $tag) {
       _id
       description
       title
@@ -127,10 +118,8 @@ export const QUERY_RECIPESBYTAG = gql`
 `;
 
 export const QUERY_TAGS = gql`
-  {
     tags {
       name
       _id
     }
-  }
 `;
