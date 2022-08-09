@@ -15,12 +15,11 @@ async function createSession(req) {
   });
 
   process.env.NODE_ENV === "production"
-    ? (cancelUrl =
-        "https://example.com/cancelProd") /*"https://abps-myrecipes.herokuapp.com/cancel"*/
+    ? (cancelUrl = "https://abps-myrecipes.herokuapp.com/")
     : (cancelUrl = "https://example.com/cancelDev");
   process.env.NODE_ENV === "production"
     ? (successUrl =
-        "https://example.com/successDev") /*"https://abps-myrecipes.herokuapp.com/success"*/
+        "https://example.com/successProd") /*"https://abps-myrecipes.herokuapp.com/success"*/
     : (successUrl = "https://example.com/successDev");
 
   const session = await stripe.checkout.sessions.create({
