@@ -5,9 +5,6 @@ import Auth from "../utils/auth";
 
 import { List } from "antd";
 
-import PostedRecipes from "../components/PostedRecipes";
-import SavedRecipes from "../components/SavedRecipes";
-
 const colors = {
     lightGold: "#ECB365",
     darkBlue: "#041C32",
