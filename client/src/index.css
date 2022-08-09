@@ -61,8 +61,30 @@ label {
   background-color: rgb(72, 72, 72);
 }
 
+.form {
+  margin-top: 25vh;
+}
+
+/* This is used for the "Sign up instead" and "Log in instead" h3 elements */
+.authLink {
+  margin-left: 33%;
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     margin-left: 35vw;
+  }
+
+  .contentHolder {
+    width: 100vw;
+  }
+
+  .formHolder {
+    width: 90vw;
+    margin-left: 0;
+  }
+
+  .authLink {
+    margin-left: 10%;
   }
 }

@@ -1,5 +1,6 @@
 import { Button, Form, Input, Modal } from "antd";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
@@ -21,7 +22,7 @@ const SignupForm = () => {
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [addUser] = useMutation(ADD_USER);
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -36,7 +37,8 @@ const SignupForm = () => {
   };
 
   const onFinish = async (values) => {
-    const mutationResponse = await addUser({
+    try {
+      const mutationResponse = await addUser({
       variables: {
         email: formState.email,
         username: formState.username,
@@ -47,6 +49,9 @@ const SignupForm = () => {
     });
     const token = mutationResponse.data.addUser.token;
     Auth.login(token);
+    } catch (err) {
+      showModal();
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -205,8 +210,11 @@ const SignupForm = () => {
           </Button>
         </Form.Item>
       </Form>
+      <h3 className="authLink">
+        Already have an account? <Link to="/login">Login instead</Link>
+      </h3>
       <Modal title="Invalid Credentials" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} className="invalidFormAlert">
-        <p>Please enter valid credentials and try again.</p>
+        <p>Either this username and/or email has already been taken, or you have entered invalid credentials. Please try again.</p>
       </Modal>
     </div>
   );
