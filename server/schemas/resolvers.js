@@ -32,16 +32,17 @@ const resolvers = {
       return await Tag.find();
     },
     recipeById: async (parent, { _id }) => {
-      return await Recipe.findById(_id);
+      return await Recipe.findById(_id).populate("tags").populate("creator");
     },
 
-    taggedRecipes: async (parent, { tag }) => {
+    recipeByTag: async (parent, { tag }) => {
       const recipes = await Recipe.find().populate("tags").populate("creator");
 
-      for (let i = 0; i < recipes.length; i++) {
-        if (recipes.tags.include(tag)) {
-          recipes[i];
-      }
+      const result = recipes.filter(
+        (eachRecipe) => !eachRecipe.recipes.tags.includes(tag)
+      );
+
+      return result;
     },
   },
 
