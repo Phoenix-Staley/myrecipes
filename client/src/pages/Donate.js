@@ -89,9 +89,9 @@ const Donate = () => {
         charityUrl = charities[0].url;
         charityLogo = charities[0].logo;
         charityStatement = charities[0].statement;
-        return;
+        break;
       case "Feeding America":
-        return;
+        break;
     }
     console.log("purchase submitted");
     console.log("amt: ", donationAmount);

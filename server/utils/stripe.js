@@ -14,9 +14,18 @@ async function createSession(req) {
     currency: "usd",
   });
 
+  process.env.NODE_ENV === "production"
+    ? (cancelUrl =
+        "https://example.com/cancelProd") /*"https://abps-myrecipes.herokuapp.com/cancel"*/
+    : (cancelUrl = "https://example.com/cancelDev");
+  process.env.NODE_ENV === "production"
+    ? (successUrl =
+        "https://example.com/successDev") /*"https://abps-myrecipes.herokuapp.com/success"*/
+    : (successUrl = "https://example.com/successDev");
+
   const session = await stripe.checkout.sessions.create({
-    success_url: "https://example.com/success",
-    cancel_url: "https://example.com/cancel",
+    success_url: successUrl,
+    cancel_url: cancelUrl,
 
     mode: "payment",
     line_items: [
