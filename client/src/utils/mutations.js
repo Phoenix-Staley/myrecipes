@@ -12,7 +12,7 @@ export const LOGIN = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation AddUser(
+  mutation addUser(
     $firstName: String!
     $lastName: String!
     $email: String!
@@ -34,6 +34,55 @@ export const ADD_USER = gql`
         lastName
         email
       }
+    }
+  }
+`;
+
+export const POST_RECIPE = gql`
+  mutation postRecipe(
+    $userId: ID!
+    $description: String!
+    $title: String!
+    $ingredients: String!
+    $steps: String!
+    $image: String!
+    $tags: String!
+    $creator: ID!
+  ) {
+    postRecipe(
+      userId: $userId
+      description: $description
+      title: $title
+      ingredients: $ingredients
+      steps: $steps
+      image: $image
+      tags: $tags
+      creator: $creator
+    ) {
+      _id
+      description
+      title
+      ingredients
+      steps
+      image
+      creator {
+        username
+      }
+      tags {
+        name
+      }
+    }
+  }
+`;
+
+export const SAVE_RECIPE = gql`
+  mutation saveRecipe($userId: ID!, $recipeId: ID!) {
+    saveRecipe(userId: $userId, recipeId: $recipeId) {
+      _id
+      username
+      firstName
+      lastName
+      email
     }
   }
 `;
