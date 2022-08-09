@@ -13,6 +13,8 @@ import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
+import Profile from "./pages/Profile";
+import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
@@ -38,8 +40,9 @@ const client = new ApolloClient({
 
 const styles = {
   body: {
-    backgroundColor: "rgb(34,71,79)",
-    minHeight: "100vh"
+    backgroundColor: "#04293A",
+    minHeight: "100vh",
+    padding: "1vh 0"
   }
 }
 
@@ -49,21 +52,21 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
+        <Nav theme={theme} />
         <div style={styles.body}>
-          <Nav theme={theme} />
           <Routes>
             <Route
               path="/"
-              element={<Home theme={theme} />}
+              element={<Home />}
             />
-            {/* <Route
-              path="/:username"
+            <Route
+              path="/user/:username"
               element={<Profile />}
             />
             <Route
               path="/me"
               element={<Profile />}
-            /> */}
+            />
             <Route
               path="/recipe/:recipeId"
               element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
@@ -76,9 +79,17 @@ function App() {
               path="/signup"
               element={<SignupForm />}
             />
+            <Route
+              path="/search"
+              element={Auth.loggedIn() ? <></> : <LoginForm />}
+            />
+            <Route 
+                path="*" 
+                element={<NoMatch />} 
+              />
           </Routes>
-          {/* <Footer /> */}
         </div>
+        {/* <Footer /> */}
       </Router>
     </ApolloProvider>
   );
