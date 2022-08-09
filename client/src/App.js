@@ -20,6 +20,7 @@ import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
 import Search from "./pages/Search";
 import Donate from "./pages/Donate";
+import Success from "./pages/Success";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -92,6 +93,10 @@ function App() {
             <Route 
               path="/donate" 
               element={<Donate />} 
+            />
+            <Route 
+              path="/success" 
+              element={<Success />} 
             />
             <Route 
                 path="*" 
