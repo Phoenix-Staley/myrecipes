@@ -84,6 +84,10 @@ function App() {
               path="/search"
               element={Auth.loggedIn() ? <Search /> : <LoginForm />}
             />
+            <Route
+              path="/search/:tag"
+              element={Auth.loggedIn() ? <Search /> : <LoginForm />}
+            />
             <Route 
                 path="*" 
                 element={<NoMatch />} 
