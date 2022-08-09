@@ -16,11 +16,10 @@ async function createSession(req) {
 
   process.env.NODE_ENV === "production"
     ? (cancelUrl = "https://abps-myrecipes.herokuapp.com/")
-    : (cancelUrl = "https://example.com/cancelDev");
+    : (cancelUrl = "http://localhost:3000/");
   process.env.NODE_ENV === "production"
-    ? (successUrl =
-        "https://example.com/successProd") /*"https://abps-myrecipes.herokuapp.com/success"*/
-    : (successUrl = "https://example.com/successDev");
+    ? (successUrl = "https://abps-myrecipes.herokuapp.com/success")
+    : (successUrl = "http://localhost:3000/success");
 
   const session = await stripe.checkout.sessions.create({
     success_url: successUrl,
