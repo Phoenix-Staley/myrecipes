@@ -1,68 +1,109 @@
-import React from "react";
-import { Link, useParams } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import Auth from "../utils/auth";
 
-import { Divider, List  } from "antd";
+import { Button  } from "antd";
 
 // import { QUERY_RECIPES } from "../utils/queries";
 
+const colors = {
+    lightGold: "#ECB365",
+    darkBlue: "#041C32",
+    textColor: "white"
+}
+
 // The styles for various elements in this page
 const styles = {
-    contentStyle: {
-        height: "260px",
-        color: "#fff",
-        lineHeight: "160px",
-        textAlign: "center",
-        background: "#364d79",
-    },
-    contentHolder: {
-        display: "flex",
-        flexDirection: "column",
-        height: "120vh",
-        justifyContent: "flex-start",
-        paddingTop: "46px",
-        margin: "0 auto"
-    },
-    listTitle: {
-        color: "white"
-    },
-    recipeList: {
-        backgroundColor: "cadetblue",
-        fontWeight: "bold",
-        textDecoration: "none"
-    },
-    recipeItem: {
-        color: "black",
-        textDecoration: "underline"
-    },
     fullRecipe: {
         display: "flex",
         flexDirection: "column",
-        height: "120vh",
+        minHeight: "120vh",
         justifyContent: "flex-start",
         paddingTop: "46px",
-        margin: "0 auto",
-        backgroundColor: "rgb(66, 61, 58)",
-        color: "white"
+        margin: "5vh auto",
+        backgroundColor: "#064663",
+        color: colors.textColor,
+        padding: "10vh 5vw",
+        borderRadius: "10px"
     },
     image: {
-        marginLeft: "10%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: "5%",
+        transform: "scale(2)",
         display: "inline",
-        transform: "translateY(9vh)"
+        border: `ridge 3px ${colors.darkBlue}`,
+        borderRadius: "5px"
     },
     recipeTitle: {
         fontSize: "xx-large",
-        color: "white",
-        marginTop: "2vh",
-        marginLeft: "45%",
+        color: colors.lightGold,
+        margin: "2vh auto",
+        marginBottom: "0",
         display: "inline"
+    },
+    creatorLink: {
+        margin: "0 auto",
+        fontSize: "larger",
+        marginBottom: "2vh",
+        color: colors.textColor
+    },
+    sectionTitle: {
+        fontSize: "xx-large",
+        margin: "0 auto",
+        color: colors.lightGold
+    },
+    description: {
+        fontSize: "x-large"
+    },
+    tags: {
+        fontSize: "larger",
+        margin: "1vh auto",
+        marginBottom: "5vh"
+    },
+    ingredients: {
+        fontSize: "x-large"
+    },
+    checkboxHolder: {
+        display: "flex",
+        flexDirection: "flex-row",
+        margin: "0 auto",
+        width: "30%",
+        padding: "1%",
+        justifyContent: "center",
+        backgroundColor: colors.darkBlue,
+        borderRadius: "10px",
+        marginBottom: "3%"
+    },
+    checkbox: {
+        padding: "0 3%",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center"
+    },
+    hasColoredText: {
+        color: colors.lightGold
+    },
+    divider: {
+        width: "100%"
+    },
+    saveBtn: {
+        width: "15%",
+        backgroundColor: "#46c275",
+        color: "black",
+        border: "0px",
+        margin: "0 auto"
     }
 }
 
-const Home = () => {
+const Recipe = () => {
 //   const { loading, data } = useQuery(QUERY_RECIPES);
 //   const recipes = data?.recipes || [];
     const { recipeId } = useParams();
+    const [isDescVisible, setIsDescVisible] = useState(true);
+    const [areIngrVisible, setAreIngrVisible] = useState(true);
+    const [areStepsVisible, setAreStepsVisible] = useState(true);
 
     const data = [
         {
@@ -93,20 +134,92 @@ const Home = () => {
                     style={styles.image}
                 />
                 <h3 style={styles.recipeTitle}>{currentRecipe.title}</h3>
-                <Divider orientation="left" style={styles.listTitle}>Recent Recipes</Divider>
-                <List
-                    style={styles.recipeList}
-                    bordered
-                    dataSource={data}
-                    renderItem={(item) => (
-                        <List.Item style={styles.recipeItem}>
-                            <Link to={`/recipes/${item.id}`} style={styles.recipeItem}>{item.title} -- {item.tags[0]}</Link>
-                        </List.Item>
+                <Link
+                    to={`/user/${currentRecipe.creator.username}`}
+                    style={styles.creatorLink}
+                    className="creator"
+                >
+                    {currentRecipe.creator.username}
+                </Link>
+                
+                <Button style={styles.saveBtn}>Save</Button>
+                
+                <p style={styles.tags}>
+                    {currentRecipe.tags.map(
+                        (tag, i) => <span className="tag" key={i}>
+                        {i > 0 && ", "}
+                        <Link to={`/search/${tag}`}>{tag}</Link>
+                        </span>
                     )}
-                />
+                </p>
+
+                <div style={styles.checkboxHolder}>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Description</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={isDescVisible}
+                            onChange={(e) => setIsDescVisible(e.target.checked)}
+                        />
+                    </div>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Ingredients</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={areIngrVisible}
+                            onChange={(e) => setAreIngrVisible(e.target.checked)}
+                        />
+                    </div>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Directions</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={areStepsVisible}
+                            onChange={(e) => setAreStepsVisible(e.target.checked)}
+                        />
+                    </div>
+                </div>
+
+                {/* Only render description is isDescVisible is true */}
+                {isDescVisible ? (
+                    <>
+                        <hr style={styles.divider} />
+                        <h4 style={styles.sectionTitle}>Description</h4>
+                        <p style={styles.description}>{currentRecipe.description}</p>
+                    </>
+                ) : <></>}
+
+                
+
+                {/* Only render ingredients if areIngrVisible is true */}
+                {areIngrVisible ? (
+                    <>
+                        <hr style={styles.divider} />
+                        <h3 style={styles.sectionTitle}>Ingredients</h3>
+                        <ul style={styles.ingredients}>
+                            {currentRecipe.ingredients.map(
+                                (ingredient, i) => <li key={i}>{ingredient}</li>
+                            )}
+                        </ul>
+                    </>
+                ) : <></>}
+
+                {/* Only render ingredients if areIngrVisible is true */}
+                {areStepsVisible ? (
+                    <>
+                        <hr style={styles.divider} />
+                        <h3 style={styles.sectionTitle}>Directions</h3>
+                        <ul style={styles.ingredients}>
+                            {currentRecipe.steps.map(
+                                (step, i) => <li key={i}>{step}</li>
+                            )}
+                        </ul>
+                    </>
+                ) : <></>}
+                
             </div>
         </main>
     );
 };
 
-export default Home;
+export default Recipe;
