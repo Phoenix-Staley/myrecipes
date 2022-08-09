@@ -73,19 +73,57 @@ const Donate = () => {
   };
 
   const submitForm = () => {
-    console.log("payment submitted");
-    console.log(
-      "amt: ",
-      document.querySelector("#control-hooks_donationAmt").value
-    );
-    console.log(
-      "charity: ",
-      document.querySelector(".ant-select-selection-item").title
-    );
-    stripePromise.then((res) => {
-      // res.redirectToCheckout({ sessionId: data.checkout.session });
-      return;
-    });
+    const charityName = document.querySelector(
+      ".ant-select-selection-item"
+    ).title;
+    const donationAmount =
+      100 *
+      parseInt(
+        document.querySelector("#control-hooks_donationAmt").value.split(" ")[1]
+      );
+    let charityUrl = charities[1].url;
+    let charityLogo = charities[1].logo;
+    let charityStatement = charities[1].statement;
+    switch (charityName) {
+      case "Action Against Hunger":
+        charityUrl = charities[0].url;
+        charityLogo = charities[0].logo;
+        charityStatement = charities[0].statement;
+        return;
+      case "Feeding America":
+        return;
+    }
+    console.log("purchase submitted");
+    console.log("amt: ", donationAmount);
+    console.log("charity: ", charityName);
+
+    const data = {
+      amount: donationAmount,
+      charityName: charityName,
+      charityUrl: charityUrl,
+      charityLogo: charityLogo,
+      charityStatement: charityStatement,
+    };
+    console.log(data);
+    fetch("/create-session", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        window.location.assign(data.url);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    // stripePromise.then((res) => {
+    //   res.redirectToCheckout({ sessionId: res.checkout.session });
+    //   return;
+    // });
   };
 
   return (

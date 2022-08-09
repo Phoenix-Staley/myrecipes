@@ -4,8 +4,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 async function createSession(req) {
   const product = await stripe.products.create({
     name: req.body.charityName,
-    description: "DonationDesc",
-    images: ["https://example.com/t-shirt.png"],
+    description: req.body.charityStatement,
+    images: [req.body.charityLogo],
   });
 
   const price = await stripe.prices.create({
