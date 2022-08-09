@@ -79,6 +79,10 @@ function App() {
               path="/signup"
               element={<SignupForm />}
             />
+            <Route
+              path="/search"
+              element={Auth.loggedIn() ? <></> : <LoginForm />}
+            />
             <Route 
                 path="*" 
                 element={<NoMatch />} 

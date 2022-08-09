@@ -27,6 +27,14 @@ const loggedOutItems = [
         key: "home"
     },
     {
+        label: (
+            <Link to="/search">
+                🔍
+            </Link>
+        ),
+        key: "search"
+    },
+    {
         // How this is rendered
         label: (
             <Link to="/login">
@@ -55,6 +63,14 @@ const loggedInItems = [
             </Link>
         ),
         key: "home"
+    },
+    {
+        label: (
+            <Link to="/search">
+                🔍
+            </Link>
+        ),
+        key: "search"
     },
     {
         // How this is rendered
