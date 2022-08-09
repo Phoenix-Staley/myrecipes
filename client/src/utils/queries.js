@@ -40,9 +40,9 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_RECIPES = gql`
+export const QUERY_ALLRECIPES = gql`
   {
-    recipes {
+    allRecipes {
       _id
       description
       title
@@ -59,9 +59,9 @@ export const QUERY_RECIPES = gql`
   }
 `;
 
-export const QUERY_RECIPE = gql`
+export const QUERY_RECIPEBYID = gql`
   {
-    recipe(recipeId: $recipeId) {
+    recipeById(recipeId: $recipeId) {
       _id
       description
       title
@@ -78,9 +78,12 @@ export const QUERY_RECIPE = gql`
   }
 `;
 
-export const QUERY_TAGGEDRECIPES = gql`
+// chane tagid to tagname,
+//add a query for myself
+
+export const QUERY_RECIPESBYTAG = gql`
   {
-    taggedRecipes(tagId: $tagId) {
+    recipesByTag(tagId: $tagId) {
       _id
       description
       title
