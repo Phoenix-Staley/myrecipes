@@ -18,6 +18,7 @@ import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
+import Search from "./pages/Search";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -81,7 +82,7 @@ function App() {
             />
             <Route
               path="/search"
-              element={Auth.loggedIn() ? <></> : <LoginForm />}
+              element={Auth.loggedIn() ? <Search /> : <LoginForm />}
             />
             <Route 
                 path="*" 

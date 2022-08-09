@@ -11,7 +11,7 @@ const styles = {
   }
 }
 
-const SignupForm = () => {
+const LoginForm = () => {
   const [formState, setFormState] = useState({
     email: "",
     password: ""
@@ -129,4 +129,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default LoginForm;
