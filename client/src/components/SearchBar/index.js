@@ -1,6 +1,9 @@
 import { AutoComplete } from "antd";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+
+import { QUERY_TAGS } from "../../utils/queries";
 
 const { Option } = AutoComplete;
 
@@ -32,50 +35,53 @@ const styles = {
     }
 }
 
-const allTags = ["western", "vegetarian", "vegan", "bland", "mexican", "burger"];
-
 const Search = () => {
-  const [result, setResult] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
+    const { data } = useQuery(QUERY_TAGS);
+    const allTags = data?.tags || [];
+    const [result, setResult] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
 
-  const handleSearch = (value) => {
-    let res = [];
+    const handleSearch = (value) => {
+        let res = [];
 
-    if (!value) {
-      res = [];
-    } else {
-      res = allTags.filter((tag) => tag.startsWith(value.toLowerCase()));
+        if (!value || !allTags[0]) {
+            res = [];
+        } else {
+            res = allTags.filter((tag) => {
+                console.log(tag.name);
+                return tag.name.startsWith(value.toLowerCase());
+            });
+        }
+
+        setResult(res);
+        setSearchTerm(value);
+    };
+
+    const loadResults = (event) => {
+        navigate(`/search/${searchTerm.toLowerCase()}`);
     }
 
-    setResult(res);
-    setSearchTerm(value);
-  };
-
-  const loadResults = (event) => {
-    navigate(`/search/${searchTerm.toLowerCase()}`);
-  }
-
-  return (
-    <>
-        
-        <div style={styles.searchPage} className="contentHolder">
-            <AutoComplete
-                style={styles.searchBar}
-                onChange={handleSearch}
-                placeholder="Input here"
-            >
-                {result.map((suggestion) => (
-                    <Option key={suggestion} value={suggestion}>
-                    {suggestion}
-                    </Option>
-                ))}
-            </AutoComplete>
-            <button className="searchBtn" onClick={loadResults} style={styles.searchBtn}>Search</button>
-        </div>
-        <p style={styles.subtitle}>Recipe tag (I.E. 'vegan' or 'breakfast')</p>
-    </>
-  );
+    return (
+        <>
+            
+            <div style={styles.searchPage} className="contentHolder">
+                <AutoComplete
+                    style={styles.searchBar}
+                    onChange={handleSearch}
+                    placeholder="Input here"
+                >
+                    {result.map((suggestion) => (
+                        <Option key={suggestion.name} value={suggestion.name}>
+                        {suggestion.name}
+                        </Option>
+                    ))}
+                </AutoComplete>
+                <button className="searchBtn" onClick={loadResults} style={styles.searchBtn}>Search</button>
+            </div>
+            <p style={styles.subtitle}>Recipe tag (I.E. 'vegan' or 'breakfast')</p>
+        </>
+    );
 };
 
 export default Search;
