@@ -19,6 +19,7 @@ import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
 import Search from "./pages/Search";
+import Donate from "./pages/Donate";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -87,6 +88,10 @@ function App() {
             <Route
               path="/search/:tag"
               element={Auth.loggedIn() ? <Search /> : <LoginForm />}
+            />
+            <Route 
+              path="/donate" 
+              element={<Donate />} 
             />
             <Route 
                 path="*" 
