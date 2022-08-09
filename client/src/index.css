@@ -37,7 +37,10 @@ label {
 
 .logo {
   margin-left: 43vw;
-  margin-top: 5vh
+  margin-top: 5vh;
+  background-color: lightskyblue;
+  border-radius: 50%;
+  padding: 2px;
 }
 
 .formHeader {
