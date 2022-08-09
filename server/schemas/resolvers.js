@@ -52,6 +52,7 @@ const resolvers = {
       });
 
     return filteredResults;
+  }
   },
 
   Mutation: {
