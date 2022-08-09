@@ -17,15 +17,16 @@ const styles = {
     },
     searchBtn: {
         marginLeft: "1%",
-        backgroundColor: "#46c275",
+        backgroundColor: "#ECB365",
         borderRadius: "6px",
+        border: "white dashed 1px",
         fontSize: "x-large"
     }
 }
 
 const allTags = ["western", "vegetarian", "vegan", "bland", "mexican", "burger"];
 
-const App = () => {
+const Search = () => {
   const [result, setResult] = useState([]);
 
   const handleSearch = (value) => {
@@ -42,6 +43,7 @@ const App = () => {
 
   return (
     <main>
+        <p style={{color: "white"}}>Recipe tag (all lowercase, I.E. 'vegetarian' or 'burger')</p>
         <div style={styles.searchPage} className="contentHolder">
             <AutoComplete
                 style={styles.searchBar}
@@ -61,4 +63,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Search;
