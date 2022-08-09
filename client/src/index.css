@@ -37,7 +37,10 @@ label {
 
 .logo {
   margin-left: 43vw;
-  margin-top: 5vh
+  margin-top: 5vh;
+  background-color: lightskyblue;
+  border-radius: 50%;
+  padding: 2px;
 }
 
 .formHeader {
@@ -67,7 +70,27 @@ label {
 
 /* This is used for the "Sign up instead" and "Log in instead" h3 elements */
 .authLink {
+  color:white;
+  font-weight: 400;
   margin-left: 33%;
+}
+
+.creator {
+  color: #ffc370 !important;
+}
+
+.creator:hover {
+  color: #cd9c57 !important;
+  text-decoration: underline;
+}
+
+.tag a {
+  color: #ffc370;
+}
+
+.tag a:hover {
+  color: #cd9c57;
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 768px) {
