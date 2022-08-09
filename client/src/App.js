@@ -13,7 +13,7 @@ import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
-// import Profile from "./pages/Profile";
+import Profile from "./pages/Profile";
 import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
@@ -59,14 +59,14 @@ function App() {
               path="/"
               element={<Home />}
             />
-            {/* <Route
+            <Route
               path="/user/:username"
               element={<Profile />}
             />
             <Route
               path="/me"
               element={<Profile />}
-            /> */}
+            />
             <Route
               path="/recipe/:recipeId"
               element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
