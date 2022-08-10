@@ -39,14 +39,13 @@ const typeDefs = gql`
     steps: [String!]
     image: String
     creator: ID!
-    tags: [Tag]
+    tags: [String]
   }
 
-#need to add user query to pull other profile data. findby username
   type Query {
     myself(_id: ID!): User
     user(_id: ID!): User
-    allRecipes(offset: 0 limit: 25): [Recipe]
+    allRecipes: [Recipe]
     recipeById(_id: ID!): Recipe
     recipeByTag(tag: String!): [Recipe]
     tags: [Tag]

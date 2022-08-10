@@ -1,7 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_MYSELF = gql`
-    user {
+  query user($id: ID!) {
+    user(_id: $id) {
       _id
       username
       firstName
@@ -36,10 +37,12 @@ export const QUERY_MYSELF = gql`
         }
       }
     }
+  }
 `;
 
 export const QUERY_USER = gql`
-    user {
+  query user($id: ID!) {
+    user(_id: $id) {
       _id
       username
       firstName
@@ -60,23 +63,20 @@ export const QUERY_USER = gql`
         }
       }
     }
+  }
 `;
 
 export const QUERY_ALLRECIPES = gql`
+  query {
     allRecipes {
       _id
       description
       title
-      ingredients
-      steps
-      image
-      creator {
-        username
-      }
       tags {
         name
       }
     }
+  }
 `;
 
 export const QUERY_RECIPEBYID = gql`
@@ -118,8 +118,9 @@ export const QUERY_RECIPESBYTAG = gql`
 `;
 
 export const QUERY_TAGS = gql`
+  query {
     tags {
       name
-      _id
     }
+  }
 `;

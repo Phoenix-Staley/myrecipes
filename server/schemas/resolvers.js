@@ -7,8 +7,10 @@ const resolvers = {
     myself: async (parent, args, context) => {
       if (context.user) {
         const myself = await User.findById(context.user._id)
-          .populate("savedRecipes")
-          .populate("postedRecipes");
+        .populate({ path: "savedRecipes", populate: "tags" })
+        .populate({ path: "savedRecipes", populate: "creator" })
+          .populate({ path: "postedRecipes", populate: "tags" })
+          .populate({ path: "postedRecipes", populate: "creator" });
 
         return myself;
       }
@@ -17,16 +19,18 @@ const resolvers = {
     },
     user: async (parent, userId, context) => {
       if (context.user) {
-        const user = await User.findById(userId).populate("postedRecipes");
+        const user = await User.findById(userId)
+          .populate({ path: "postedRecipes", populate: "tags" })
+          .populate({ path: "postedRecipes", populate: "creator" });
         return user;
       }
 
+     
       throw new AuthenticationError("Must be logged in to see other profiles");
     },
-    // pulled offset and limit pagination from documentation. Need to confirm it is set up correctly
-    allRecipes: async (root, { offset, limit }, ctx, info) => {
-      const index = recipes;
-      return await Recipe.slice(offset, offset + limit);
+   
+    allRecipes: async () => {
+      return await Recipe.find();
     },
     tags: async () => {
       return await Tag.find();
@@ -38,12 +42,17 @@ const resolvers = {
     recipeByTag: async (parent, { tag }) => {
       const recipes = await Recipe.find().populate("tags").populate("creator");
 
-      const result = recipes.filter(
-        (eachRecipe) => !eachRecipe.recipes.tags.includes(tag)
-      );
+      let filteredResults = [];
+      recipes.forEach((recipe) => {
+        recipe.tags.forEach((recipeTag) => {
+          if (recipeTag.name === tag) {
+            filteredResults.push(recipe);
+          }
+        });
+      });
 
-      return result;
-    },
+    return filteredResults;
+  }
   },
 
   Mutation: {
@@ -73,7 +82,8 @@ const resolvers = {
     },
 
     addTag: async (parent, name) => {
-      return await Tag.create(name);
+      const lowerCaseName = name.toLowerCase();
+      return await Tag.create(lowerCaseName);
     },
 
     postRecipe: async (parent, { recipeData }, context) => {
