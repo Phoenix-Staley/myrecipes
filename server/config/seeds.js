@@ -167,7 +167,7 @@ db.once("open", async () => {
     },
     {
       description: "Simple yet standout cocktail.",
-      title: "Classic daiquiri",
+      title: "Classic Daiquiri",
       ingredients: [
         "3/4 oz. Lime juice",
         "1/2 oz. Demerara simple syrup",
@@ -201,7 +201,7 @@ db.once("open", async () => {
     },
     {
       description: "A perfect way to enjoy a summer evening by the grill.",
-      title: "Cedar plank grilled salmon",
+      title: "Cedar Plank Grilled Salmon",
       ingredients: [
         "2 Cedar planks",
         "2 Salmon fillets (approximately 1 lb each)",
