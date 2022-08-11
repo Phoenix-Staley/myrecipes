@@ -2,13 +2,18 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Recipe, Tag } = require("../models");
 const { signToken } = require("../utils/auth");
 
+const { PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { s3Client } = require("../utils/s3Client"); // Helper function that creates Amazon S3 service client module.
+const { v4: uuidv4 } = require("uuid");
+
 const resolvers = {
   Query: {
     myself: async (parent, args, context) => {
       if (context.user) {
         const myself = await User.findById(context.user._id)
-        .populate({ path: "savedRecipes", populate: "tags" })
-        .populate({ path: "savedRecipes", populate: "creator" })
+          .populate({ path: "savedRecipes", populate: "tags" })
+          .populate({ path: "savedRecipes", populate: "creator" })
           .populate({ path: "postedRecipes", populate: "tags" })
           .populate({ path: "postedRecipes", populate: "creator" });
 
@@ -25,10 +30,9 @@ const resolvers = {
         return user;
       }
 
-     
       throw new AuthenticationError("Must be logged in to see other profiles");
     },
-   
+
     allRecipes: async () => {
       return await Recipe.find();
     },
@@ -51,8 +55,8 @@ const resolvers = {
         });
       });
 
-    return filteredResults;
-  }
+      return filteredResults;
+    },
   },
 
   Mutation: {
@@ -107,6 +111,21 @@ const resolvers = {
         );
       }
       throw new AuthenticationError("You are not logged into an account!");
+    },
+    fileUploadURL: async (parent, args) => {
+      try {
+        const bucketParams = {
+          Bucket: "myrecipesbucket-abps",
+          Key: `${uuidv4()}-${Date.now().toString()}`,
+        };
+        const command = new PutObjectCommand(bucketParams);
+        const signedUrl = await getSignedUrl(s3Client, command, {
+          expiresIn: 3600,
+        });
+        return { signedUrl };
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

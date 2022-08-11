@@ -86,3 +86,11 @@ export const SAVE_RECIPE = gql`
     }
   }
 `;
+
+export const FILE_UPLOAD_URL = gql`
+  mutation Mutation {
+    fileUploadURL {
+      signedUrl
+    }
+  }
+`;
