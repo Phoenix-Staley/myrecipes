@@ -117,13 +117,103 @@ const Recipe = () => {
         }
     });
 
-    const currentRecipe = data;
+    const currentRecipe = data?.recipeById || {};
 
-    return data ? null : (
+    return data ? (
         <main>
-            
+            <div style={styles.fullRecipe} className="contentHolder recipe">
+                <img
+                    width={192}
+                    src={currentRecipe.image}
+                    style={styles.image}
+                />
+                <h3 style={styles.recipeTitle}>{currentRecipe.title}</h3>
+                <Link
+                    to={`/user/${currentRecipe.creator.username}`}
+                    style={styles.creatorLink}
+                    className="creator"
+                >
+                    {currentRecipe.creator.username}
+                </Link>
+                
+                <Button style={styles.saveBtn} onClick={saveRecipe}>Save</Button>
+                
+                <p style={styles.tags}>
+                    {currentRecipe.tags.map(
+                        (tag, i) => <span className="tag" key={i}>
+                        {i > 0 && ", "}
+                        <Link to={`/search/${tag}`}>{tag}</Link>
+                        </span>
+                    )}
+                </p>
+
+                <div style={styles.checkboxHolder}>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Description</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={isDescVisible}
+                            onChange={(e) => setIsDescVisible(e.target.checked)}
+                        />
+                    </div>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Ingredients</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={areIngrVisible}
+                            onChange={(e) => setAreIngrVisible(e.target.checked)}
+                        />
+                    </div>
+                    <div style={styles.checkbox}>
+                        <h3 style={styles.hasColoredText}>Directions</h3>
+                        <input
+                            type="checkbox"
+                            defaultChecked={areStepsVisible}
+                            onChange={(e) => setAreStepsVisible(e.target.checked)}
+                        />
+                    </div>
+                </div>
+
+                {/* Only render description is isDescVisible is true */}
+                {isDescVisible ? (
+                    <>
+                        <hr style={styles.divider} />
+                        <h4 style={styles.sectionTitle}>Description</h4>
+                        <p style={styles.description}>{currentRecipe.description}</p>
+                    </>
+                ) : <></>}
+
+                
+
+                {/* Only render ingredients if areIngrVisible is true */}
+                {areIngrVisible ? (
+                    <>
+                        <hr style={styles.divider} />
+                        <h3 style={styles.sectionTitle}>Ingredients</h3>
+                        <ul style={styles.ingredients}>
+                            {currentRecipe.ingredients.map(
+                                (ingredient, i) => <li key={i}>{ingredient}</li>
+                            )}
+                        </ul>
+                    </>
+                ) : <></>}
+
+                {/* Only render ingredients if areIngrVisible is true */}
+                {areStepsVisible ? (
+                    <>
+                        <hr style={styles.divider} />
+                        <h3 style={styles.sectionTitle}>Directions</h3>
+                        <ul style={styles.ingredients}>
+                            {currentRecipe.steps.map(
+                                (step, i) => <li key={i}>{step}</li>
+                            )}
+                        </ul>
+                    </>
+                ) : <></>}
+                
+            </div>
         </main>
-    );
+    ) : null;
 };
 
 export default Recipe;
