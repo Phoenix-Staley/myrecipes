@@ -1,5 +1,5 @@
 import { Button, Form, Input, InputNumber, Select } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from "@apollo/client";
 
@@ -9,7 +9,79 @@ const stripePromise = loadStripe(
   "pk_test_51LSu7dEiFhTTRayXOG1nRS5viPL5QLo2dUJrQEqDDtEhbfugXUmSk6yNln2LXZogY6nUP0fW9Qq7rJiwNcP6NiqW00fjf52PSv"
 );
 
+const colors = {
+  lightGold: "#ECB365",
+  darkBlue: "#041C32",
+  textColor: "white",
+};
+
+const tabBorderStyle = "1px solid black";
+
+const styles = {
+  authError: {
+    width: "100%",
+    textAlign: "center",
+    marginTop: "20%",
+    color: colors.textColor,
+    fontSize: "x-large",
+  },
+  header: {
+    margin: "2vh auto",
+    textAlign: "left",
+    backgroundColor: colors.lightGold,
+    borderRadius: "15px 15px 0 0",
+    padding: "1%",
+    fontSize: "large",
+    marginBottom: "0",
+  },
+  subtitle: {
+    fontSize: "large",
+  },
+  tabs: {
+    backgroundColor: colors.darkBlue,
+    margin: "0 auto",
+  },
+  selected: {
+    backgroundColor: colors.darkBlue,
+    color: colors.textColor,
+    borderBottom: "0",
+    width: "50%",
+    cursor: "pointer",
+  },
+  unselected: {
+    backgroundColor: colors.lightGold,
+    border: tabBorderStyle,
+    width: "50%",
+    cursor: "pointer",
+  },
+  list: {
+    backgroundColor: "cadetblue",
+    margin: "0 auto",
+    border: "0",
+    minHeight: "75vh",
+    borderRadius: "0 0 25px 25px",
+  },
+  recipeItem: {
+    borderBottom: "2px dashed black",
+  },
+  recipeName: {
+    color: "black",
+    textDecoration: "underline",
+  },
+  subtitle: {
+    backgroundColor: colors.darkBlue,
+    color: "white",
+    textAlign: "center",
+    margin: "0 auto",
+    marginBottom: "0",
+    border: tabBorderStyle,
+    fontSize: "x-large",
+  },
+};
+
 const Donate = () => {
+  const [selectedCharity, changeSelectedCharity] = useState({});
+
   const layout = {
     labelCol: {
       span: 6,
@@ -47,15 +119,11 @@ const Donate = () => {
   const onCharityChange = (value) => {
     switch (value) {
       case "AAH":
-        form.setFieldsValue({
-          note: "",
-        });
+        changeSelectedCharity(charities[0]);
         return;
 
       case "FA":
-        form.setFieldsValue({
-          note: "",
-        });
+        changeSelectedCharity(charities[1]);
         return;
     }
   };
@@ -127,58 +195,81 @@ const Donate = () => {
   };
 
   return (
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-      <Form.Item
-        name="donationAmt"
-        label="Donation Amount"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <InputNumber
-          defaultValue={10.0}
-          formatter={(value) =>
-            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }
-          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          onChange={onAmtChange}
-        />
-      </Form.Item>
-      <Form.Item
-        name="charity"
-        label="Charity"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onCharityChange}
-          allowClear
+    <main>
+      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+        <Form.Item
+          name="donationAmt"
+          label="Donation Amount"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
         >
-          <Option value="AAH">Action Against Hunger</Option>
-          <Option value="FA">Feeding America</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) =>
-          prevValues.charity !== currentValues.charity
-        }
-      ></Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" onClick={submitForm}>
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-      </Form.Item>
-    </Form>
+          <InputNumber
+            defaultValue={10.0}
+            formatter={(value) =>
+              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            onChange={onAmtChange}
+          />
+        </Form.Item>
+        <Form.Item
+          name="charity"
+          label="Charity"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Select
+            placeholder="Select a option and change input text above"
+            onChange={onCharityChange}
+            allowClear
+          >
+            <Option value="AAH">Action Against Hunger</Option>
+            <Option value="FA">Feeding America</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.charity !== currentValues.charity
+          }
+        ></Form.Item>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" onClick={submitForm}>
+            Submit
+          </Button>
+          <Button htmlType="button" onClick={onReset}>
+            Reset
+          </Button>
+        </Form.Item>
+      </Form>
+      <div style={styles.header} className="charityHeader">
+        <h1>{selectedCharity.name}</h1>
+        <p style={styles.recipeName}>{selectedCharity.statement}</p>
+      </div>
+      <div style={styles.subtitle} className="contentHolder">
+        <h3 style={styles.subtitle}>Posted</h3>
+      </div>
+      {/* <div style={styles.list} className="contentHolder">
+        <List
+          style={styles.list}
+          bordered
+          dataSource={data2}
+          renderItem={(item) => (
+            <List.Item style={styles.recipeItem}>
+              <Link to={`/recipe/${item._id}`} style={styles.recipeName}>
+                {item.title} -- {item.tags[0]}
+              </Link>
+            </List.Item>
+          )}
+        />
+      </div> */}
+    </main>
   );
 };
 
