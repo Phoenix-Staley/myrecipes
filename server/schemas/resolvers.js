@@ -27,6 +27,7 @@ const resolvers = {
         const user = await User.findById(userId)
           .populate("postedRecipes")
           .populate({ path: "postedRecipes", populate: ["tags", "creator"] });
+
         return user;
       }
 
@@ -66,6 +67,7 @@ const resolvers = {
       const user = await User.create(args);
       const token = signToken(user);
 
+      console.log("checking server");
       return { token, user };
     },
 
