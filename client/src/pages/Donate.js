@@ -29,7 +29,7 @@ const styles = {
     margin: "2vh auto",
     textAlign: "left",
     backgroundColor: colors.lightGold,
-    borderRadius: "15px 15px 0 0",
+    borderRadius: "15px 15px 15px 15px",
     padding: "1%",
     fontSize: "large",
     marginBottom: "0",
@@ -248,27 +248,21 @@ const Donate = () => {
           </Button>
         </Form.Item>
       </Form>
-      <div style={styles.header} className="charityHeader">
-        <h1>{selectedCharity.name}</h1>
-        <p style={styles.recipeName}>{selectedCharity.statement}</p>
-      </div>
-      <div style={styles.subtitle} className="contentHolder">
-        <h3 style={styles.subtitle}>Posted</h3>
-      </div>
-      {/* <div style={styles.list} className="contentHolder">
-        <List
-          style={styles.list}
-          bordered
-          dataSource={data2}
-          renderItem={(item) => (
-            <List.Item style={styles.recipeItem}>
-              <Link to={`/recipe/${item._id}`} style={styles.recipeName}>
-                {item.title} -- {item.tags[0]}
-              </Link>
-            </List.Item>
-          )}
-        />
-      </div> */}
+      {selectedCharity.name ? (
+        <div style={styles.header} className="charityHeader">
+          <h1>{selectedCharity.name}</h1>
+          <p style={styles.recipeName}>{selectedCharity.statement}</p>
+          <a href={selectedCharity.url}>{selectedCharity.name} Homepage</a>
+          <br />
+          <img
+            src={selectedCharity.logo}
+            width="75"
+            alt={`${selectedCharity.name} logo`}
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
     </main>
   );
 };
