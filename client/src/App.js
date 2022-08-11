@@ -24,7 +24,7 @@ import Donate from "./pages/Donate";
 import Success from "./pages/Success";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
