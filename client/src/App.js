@@ -19,9 +19,10 @@ import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
 import Search from "./pages/Search";
+import Results from "./pages/Results";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -86,7 +87,7 @@ function App() {
             />
             <Route
               path="/search/:tag"
-              element={Auth.loggedIn() ? <Search /> : <LoginForm />}
+              element={Auth.loggedIn() ? <Results /> : <LoginForm />}
             />
             <Route 
                 path="*" 
