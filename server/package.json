@@ -12,6 +12,8 @@
   "author": "Bhakti Khandagale, Sophie Miller, Phoenix Staley, Alejandro Villanueva",
   "license": "Apache-2.0",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.145.0",
+    "@aws-sdk/s3-request-presigner": "^3.145.0",
     "apollo-server-express": "^3.6.1",
     "bcrypt": "^4.0.1",
     "dotenv": "^16.0.1",
@@ -19,7 +21,8 @@
     "graphql": "^16.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.8",
-    "stripe": "^8.67.0"
+    "stripe": "^8.222.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
