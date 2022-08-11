@@ -7,10 +7,10 @@ const resolvers = {
     myself: async (parent, args, context) => {
       if (context.user) {
         const myself = await User.findById(context.user._id)
-        .populate({ path: "savedRecipes", populate: "tags" })
-        .populate({ path: "savedRecipes", populate: "creator" })
-          .populate({ path: "postedRecipes", populate: "tags" })
-          .populate({ path: "postedRecipes", populate: "creator" });
+          .populate({ path: "savedRecipes", populate: "tags" })
+          .populate({ path: "savedRecipes", populate: "creator" })
+          .populate({ path: "postedRecipes.tags", populate: "names" })
+          .populate({ path: "postedRecipes.creator", populate: "username" });
 
         return myself;
       }
@@ -20,15 +20,14 @@ const resolvers = {
     user: async (parent, userId, context) => {
       if (context.user) {
         const user = await User.findById(userId)
-          .populate({ path: "postedRecipes", populate: "tags" })
-          .populate({ path: "postedRecipes", populate: "creator" });
+          .populate({ path: "postedRecipes.tags", populate: "name" })
+          .populate({ path: "postedRecipes.creator", populate: "username" });
         return user;
       }
 
-     
       throw new AuthenticationError("Must be logged in to see other profiles");
     },
-   
+
     allRecipes: async () => {
       return await Recipe.find();
     },
@@ -36,11 +35,15 @@ const resolvers = {
       return await Tag.find();
     },
     recipeById: async (parent, { _id }) => {
-      return await Recipe.findById(_id).populate("tags").populate("creator");
+      return await Recipe.findById(_id)
+        .populate({ path: "tags", populate: "name" })
+        .populate({ path: "creator", populate: "username" });
     },
 
     recipeByTag: async (parent, { tag }) => {
-      const recipes = await Recipe.find().populate("tags").populate("creator");
+      const recipes = await Recipe.find()
+        .populate({ path: "tags", populate: "name" })
+        .populate({ path: "creator", populate: "username" });
 
       let filteredResults = [];
       recipes.forEach((recipe) => {
@@ -51,8 +54,8 @@ const resolvers = {
         });
       });
 
-    return filteredResults;
-  }
+      return filteredResults;
+    },
   },
 
   Mutation: {
