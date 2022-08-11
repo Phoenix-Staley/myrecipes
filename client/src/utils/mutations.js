@@ -43,10 +43,10 @@ export const POST_RECIPE = gql`
     $userId: ID!
     $description: String!
     $title: String!
-    $ingredients: String!
-    $steps: String!
+    $ingredients: [String!]
+    $steps: [String!]
     $image: String!
-    $tags: String!
+    $tags: [String!]
     $creator: ID!
   ) {
     postRecipe(
@@ -83,6 +83,14 @@ export const SAVE_RECIPE = gql`
       firstName
       lastName
       email
+    }
+  }
+`;
+
+export const FILE_UPLOAD_URL = gql`
+  mutation Mutation {
+    fileUploadURL {
+      signedUrl
     }
   }
 `;
