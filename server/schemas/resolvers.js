@@ -67,6 +67,7 @@ const resolvers = {
       const user = await User.create(args);
       const token = signToken(user);
 
+      console.log("checking server");
       return { token, user };
     },
 
