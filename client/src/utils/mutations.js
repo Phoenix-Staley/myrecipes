@@ -43,10 +43,10 @@ export const POST_RECIPE = gql`
     $userId: ID!
     $description: String!
     $title: String!
-    $ingredients: String!
-    $steps: String!
+    $ingredients: [String!]
+    $steps: [String!]
     $image: String!
-    $tags: String!
+    $tags: [String!]
     $creator: ID!
   ) {
     postRecipe(

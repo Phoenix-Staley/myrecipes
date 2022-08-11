@@ -51,7 +51,7 @@ const typeDefs = gql`
     user(_id: ID!): User
     allRecipes: [Recipe]
     recipeById(_id: ID!): Recipe
-    recipeByTag(tag: String!): [Recipe]
+    recipesByTag(tag: String!): [Recipe]
     tags: [Tag]
     getFileUploadURL: SingedURL
 

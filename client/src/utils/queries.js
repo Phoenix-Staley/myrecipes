@@ -72,6 +72,10 @@ export const QUERY_ALLRECIPES = gql`
       _id
       description
       title
+      creator {
+        _id
+        username
+      }
       tags {
         name
       }
@@ -89,6 +93,7 @@ export const QUERY_RECIPEBYID = gql`
       steps
       image
       creator {
+        _id
         username
       }
       tags {
@@ -108,6 +113,7 @@ export const QUERY_RECIPESBYTAG = gql`
       steps
       image
       creator {
+        _id
         username
       }
       tags {
@@ -120,6 +126,7 @@ export const QUERY_RECIPESBYTAG = gql`
 export const QUERY_TAGS = gql`
   query {
     tags {
+      _id
       name
     }
   }
