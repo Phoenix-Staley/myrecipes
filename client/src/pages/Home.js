@@ -45,7 +45,7 @@ const Home = () => {
 
   return (
     <main>
-      {/* <img
+      <img
                 width={192}
                 src="/logo192.png"
                 className="logo"
@@ -63,7 +63,7 @@ const Home = () => {
                         )
                     }
                 />
-            </div> */}
+            </div>
     </main>
   );
 };

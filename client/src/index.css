@@ -93,6 +93,11 @@ label {
   text-decoration: underline;
 }
 
+.searchBtn:hover {
+  background-color: #af864c !important;
+  border: black solid 1px !important;
+}
+
 @media screen and (max-width: 768px) {
   .logo {
     margin-left: 35vw;
