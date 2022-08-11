@@ -115,8 +115,8 @@ const resolvers = {
     fileUploadURL: async (parent, args) => {
       try {
         const bucketParams = {
-          Bucket: "360shopping",
-          Key: `product-img/${uuidv4()}-${Date.now().toString()}`,
+          Bucket: "myrecipesbucket-abps",
+          Key: `${uuidv4()}-${Date.now().toString()}`,
         };
         const command = new PutObjectCommand(bucketParams);
         const signedUrl = await getSignedUrl(s3Client, command, {
