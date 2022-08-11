@@ -1,11 +1,12 @@
 import { Button, Form, Input, Modal, AutoComplete } from "antd";
-import { Tag as List } from "antd";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
 import { POST_RECIPE } from "../utils/mutations";
-import { QUERY_TAGS } from "../../utils/queries";
+import { QUERY_TAGS } from "../utils/queries";
+import IngredientList from "../components/IngredientList";
+import StepsList from "../components/StepsList";
 
 const { Option } = AutoComplete;
 
@@ -34,6 +35,8 @@ const PostRecipeForm = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [postRecipe, { error }] = useMutation(POST_RECIPE);
+
+  const navigate = useNavigate();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -75,24 +78,12 @@ const PostRecipeForm = () => {
     }
   };
 
-  const handleTagSearch = (value) => {
-    let res = [];
-
-    if (!value || !allTags[0]) {
-      res = [];
-    } else {
-      res = allTags.filter((tag) => {
-        console.log(tag.name);
-        return tag.name.startsWith(value.toLowerCase());
-      });
-    }
-
-    setTagsResult(res);
-    setSearchTerm(value);
-  };
-
   const onFinishFailed = (errorInfo) => {
     showModal();
+  };
+
+  const redirect = (event) => {
+    navigate(`/me`);
   };
 
   const handleChange = (event) => {
@@ -109,9 +100,6 @@ const PostRecipeForm = () => {
         name="basic"
         labelCol={{
           span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
         }}
         initialValues={{
           remember: true,
@@ -164,43 +152,23 @@ const PostRecipeForm = () => {
           <Input name="image" onChange={handleChange} />
         </Form.Item>
 
-        <Form.Item
-          label="Ingredients"
-          name="ingredients"
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please add the ingredients for your recipe",
-            },
-          ]}
-        >
-          <Tag name="ingredients" onChange={handleChange} />
+        <Form.Item label="Ingredients" name="ingredients" hasFeedback>
+          <IngredientList />
         </Form.Item>
 
-        <Form.Item
-          label="Steps"
-          name="steps"
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please add the steps of your recipe",
-            },
-          ]}
-        >
-          <Input name="steps" onChange={handleChange} />
+        <Form.Item label="Steps" name="steps" hasFeedback>
+          <StepsList></StepsList>
         </Form.Item>
 
         <Form.Item label="Recipe Tags" name="tags">
-          <AutoComplete onChange={handleTagSearch} placeholder="Input here">
+          {/* <AutoComplete onChange={handleTagSearch} placeholder="Input here">
             {tagsResult.map((suggestion) => (
               <Option key={suggestion.name} value={suggestion.name}>
                 {suggestion.name}
               </Option>
             ))}
-          </AutoComplete>
-          <Input name="tags" onChange={handleTagSearch} />
+          </AutoComplete> */}
+          {/* <Input name="tags" onChange={handleTagSearch} /> */}
         </Form.Item>
 
         <Form.Item
@@ -222,7 +190,8 @@ const PostRecipeForm = () => {
         className="invalidFormAlert"
       >
         <p>
-          Please check the form entries and ensure all are filled out correctly.
+          Please check the form entries and ensure all fields are filled out
+          correctly.
         </p>
       </Modal>
     </div>
