@@ -77,8 +77,8 @@ const styles = {
 }
 
 const Profile = () => {
-//   const { loading, data } = useQuery(QUERY_RECIPES);
-//   const recipes = data?.recipes || [];
+//   const { data } = useQuery(QUERY_USER);
+//   const userData = data?.recipes || [];
     const { username } = useParams();
     const { firstName, lastName } = Auth.getProfile().data;
     const [currentTab, setCurrentTab] = useState("saved");

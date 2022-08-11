@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
 
 import { Button  } from "antd";
 
-// import { QUERY_RECIPES } from "../utils/queries";
+import { QUERY_RECIPEBYID } from "../utils/queries";
+import { SAVE_RECIPE } from "../utils/mutations";
 
 const colors = {
     lightGold: "#ECB365",
@@ -101,32 +102,25 @@ const Recipe = () => {
 //   const { loading, data } = useQuery(QUERY_RECIPES);
 //   const recipes = data?.recipes || [];
     const { recipeId } = useParams();
+    const { loading, data } = useQuery(QUERY_RECIPEBYID, {
+        variables: { recipeId }
+    })
     const [isDescVisible, setIsDescVisible] = useState(true);
     const [areIngrVisible, setAreIngrVisible] = useState(true);
     const [areStepsVisible, setAreStepsVisible] = useState(true);
+    console.log(data);
 
-    const data = [
-        {
-            _id: 1,
-            description: "Best Hamburger Patty Recipe - Thick or thin, made on the grill or stovetop, this is the best and easiest all-purpose recipe for perfect hamburger patties every time! These juicy, delicious homemade hamburgers are ready in less than 30 minutes and are a must-make for your next cookout. Make burgers your way and have them come out flawless every time with what I consider to be the Best Hamburger Patty Recipe, in my humble opinion. It's a classic all-American recipe for mouthwatering burgers that can be cooked on the grill, on the stovetop, as thick 1/3 pound patties, or as ultra-thin griddle patties. Get ready, because you are about to make the burger of your dreams, people!",
-            title: "Western Comfort Burger",
-            ingredients: ["1 yellow onion", "1 whole tomato", "1/2 lbs ground beef", "Kosher salt", "1 tbsp ground black pepper", "2 hamburger buns", "Condiments"],
-            steps: ["First, set out a large mixing bowl and add in the ground beef, crushed crackers, egg, Worcestershire sauce, milk, and spices. Use your hands to thoroughly combine until the mixture is very smooth.", "Next, press the meat down in the bowl, into an even disk. Use a knife to cut and divide the hamburger patty mixture into 6 and 1/3 pound grill or skillet patties, or 12 thin griddle patties. Like so:", "Set out a baking sheet, lined with wax paper or foil, to hold the patties. One at a time, gather the patty mix and press firmly into patties of your desired thickness. You typically want hamburger patties to be slightly larger than the buns they'll be served on since they'll shrink a bit in the cooking process.", "Place the formed patties on the baking sheet. With thick patties, press a dent in the center of each patty, so they don't puff up while cooking.", "You can stack the patties with sheets of wax paper between layers if needed.", "Then, preheat the grill or a skillet to medium heat, approximately 350-400 degrees F."],
-            image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/burger.jpg",
-            creator: {
-                username: "Bob's Burgers",
-                firstName: "Bob",
-                lastName: "Doe"
-            },
-            tags: ["Burger", "Western", "Dinner"],
+    const [saveRecipe] = useMutation(SAVE_RECIPE, {
+        variables: {
+            recipeId: recipeId,
+            userId: Auth.getProfile()._id
         }
-    ]
+    });
 
-    const currentRecipe = data[recipeId - 1];
+    const currentRecipe = data?.recipeById || {};
 
-    return (
+    return data ? (
         <main>
-            
             <div style={styles.fullRecipe} className="contentHolder recipe">
                 <img
                     width={192}
@@ -142,7 +136,7 @@ const Recipe = () => {
                     {currentRecipe.creator.username}
                 </Link>
                 
-                <Button style={styles.saveBtn}>Save</Button>
+                <Button style={styles.saveBtn} onClick={saveRecipe}>Save</Button>
                 
                 <p style={styles.tags}>
                     {currentRecipe.tags.map(
@@ -219,7 +213,7 @@ const Recipe = () => {
                 
             </div>
         </main>
-    );
+    ) : null;
 };
 
 export default Recipe;
