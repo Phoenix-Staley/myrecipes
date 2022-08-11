@@ -2,15 +2,20 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Recipe, Tag } = require("../models");
 const { signToken } = require("../utils/auth");
 
+const { PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { s3Client } = require("../utils/s3Client"); // Helper function that creates Amazon S3 service client module.
+const { v4: uuidv4 } = require("uuid");
+
 const resolvers = {
   Query: {
     myself: async (parent, args, context) => {
       if (context.user) {
         const myself = await User.findById(context.user._id)
-          .populate({ path: "savedRecipes", populate: "tags" })
-          .populate({ path: "savedRecipes", populate: "creator" })
-          .populate({ path: "postedRecipes.tags", populate: "names" })
-          .populate({ path: "postedRecipes.creator", populate: "username" });
+          .populate("postedRecipes")
+          .populate("savedRecipes")
+          .populate({ path: "savedRecipes", populate: ["tags", "creator"] })
+          .populate({ path: "postedRecipes", populate: ["tags", "creator"] });
 
         return myself;
       }
@@ -20,8 +25,8 @@ const resolvers = {
     user: async (parent, userId, context) => {
       if (context.user) {
         const user = await User.findById(userId)
-          .populate({ path: "postedRecipes.tags", populate: "name" })
-          .populate({ path: "postedRecipes.creator", populate: "username" });
+          .populate("postedRecipes")
+          .populate({ path: "postedRecipes", populate: ["tags", "creator"] });
         return user;
       }
 
@@ -29,7 +34,7 @@ const resolvers = {
     },
 
     allRecipes: async () => {
-      return await Recipe.find();
+      return await Recipe.find().populate("creator").populate("tags");
     },
     tags: async () => {
       return await Tag.find();
@@ -40,10 +45,8 @@ const resolvers = {
         .populate({ path: "creator", populate: "username" });
     },
 
-    recipeByTag: async (parent, { tag }) => {
-      const recipes = await Recipe.find()
-        .populate({ path: "tags", populate: "name" })
-        .populate({ path: "creator", populate: "username" });
+    recipesByTag: async (parent, { tag }) => {
+      const recipes = await Recipe.find().populate("tags").populate("creator");
 
       let filteredResults = [];
       recipes.forEach((recipe) => {
@@ -85,18 +88,21 @@ const resolvers = {
     },
 
     addTag: async (parent, name) => {
-      const lowerCaseName = name.toLowerCase();
-      return await Tag.create(lowerCaseName);
+      name.name = name.name.toLowerCase();
+      return await Tag.create(name);
     },
 
     postRecipe: async (parent, { recipeData }, context) => {
       if (context.user) {
         recipeData.creator = context.user._id;
         const newRecipe = await Recipe.create(recipeData);
-        await User.findOneAndUpdate(
+        return await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { postedRecipes: newRecipe } }
-        );
+          { $addToSet: { postedRecipes: newRecipe } },
+          { new: true }
+        )
+          .populate("postedRecipes")
+          .populate("savedRecipes");
       }
       throw new AuthenticationError("You are not logged into an account!");
     },
@@ -107,9 +113,26 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { savedRecipes: recipeId } },
           { new: true, runValidators: true }
-        );
+        )
+          .populate("postedRecipes")
+          .populate("savedRecipes");
       }
       throw new AuthenticationError("You are not logged into an account!");
+    },
+    fileUploadURL: async (parent, args) => {
+      try {
+        const bucketParams = {
+          Bucket: "myrecipesbucket-abps",
+          Key: `${uuidv4()}-${Date.now().toString()}`,
+        };
+        const command = new PutObjectCommand(bucketParams);
+        const signedUrl = await getSignedUrl(s3Client, command, {
+          expiresIn: 3600,
+        });
+        return { signedUrl };
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

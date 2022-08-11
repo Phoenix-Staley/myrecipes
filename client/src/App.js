@@ -19,6 +19,7 @@ import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
 import Search from "./pages/Search";
+import Results from "./pages/Results";
 import Donate from "./pages/Donate";
 import Success from "./pages/Success";
 
@@ -88,7 +89,7 @@ function App() {
             />
             <Route
               path="/search/:tag"
-              element={Auth.loggedIn() ? <Search /> : <LoginForm />}
+              element={Auth.loggedIn() ? <Results /> : <LoginForm />}
             />
             <Route 
               path="/donate" 

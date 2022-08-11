@@ -42,13 +42,18 @@ const typeDefs = gql`
     tags: [String]
   }
 
+  type SingedURL {
+    signedUrl: String
+  }
+
   type Query {
     myself(_id: ID!): User
     user(_id: ID!): User
     allRecipes: [Recipe]
     recipeById(_id: ID!): Recipe
-    recipeByTag(tag: String!): [Recipe]
+    recipesByTag(tag: String!): [Recipe]
     tags: [Tag]
+    getFileUploadURL: SingedURL
 
     #recipe(userId: ID!): [Recipe]
     #recipe(tagId: ID!): [Recipe]
@@ -67,6 +72,7 @@ const typeDefs = gql`
     postRecipe(recipeData: recipeInput): User
     saveRecipe(userId: ID!, recipeId: ID!): User
     addTag(name: String!): Tag
+    fileUploadURL: SingedURL
   }
 `;
 
