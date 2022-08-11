@@ -40,7 +40,9 @@ const resolvers = {
       return await Tag.find();
     },
     recipeById: async (parent, { _id }) => {
-      return await Recipe.findById(_id).populate("tags").populate("creator");
+      return await Recipe.findById(_id)
+        .populate({ path: "tags", populate: "name" })
+        .populate({ path: "creator", populate: "username" });
     },
 
     recipesByTag: async (parent, { tag }) => {
