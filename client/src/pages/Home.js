@@ -39,9 +39,7 @@ const styles = {
 
 const Home = () => {
   const { data } = useQuery(QUERY_ALLRECIPES);
-  console.log("data:", data);
   const recipes = data?.allRecipes || [];
-  console.log("recipes", recipes);
 
   return (
     <main>

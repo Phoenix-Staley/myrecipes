@@ -99,8 +99,6 @@ const styles = {
 }
 
 const Recipe = () => {
-//   const { loading, data } = useQuery(QUERY_RECIPES);
-//   const recipes = data?.recipes || [];
     const { recipeId } = useParams();
     const { loading, data } = useQuery(QUERY_RECIPEBYID, {
         variables: { recipeId }
@@ -108,7 +106,6 @@ const Recipe = () => {
     const [isDescVisible, setIsDescVisible] = useState(true);
     const [areIngrVisible, setAreIngrVisible] = useState(true);
     const [areStepsVisible, setAreStepsVisible] = useState(true);
-    console.log(data);
 
     const [saveRecipe] = useMutation(SAVE_RECIPE, {
         variables: {
