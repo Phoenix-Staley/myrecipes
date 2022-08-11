@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Redirect } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,11 +9,18 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
+import Auth from "./utils/auth";
+
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
+import Profile from "./pages/Profile";
+import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
 import SignupForm from "./pages/SignupForm";
 import SingleRecipe from "./pages/SingleRecipe";
+import Search from "./pages/Search";
+import Donate from "./pages/Donate";
+import Success from "./pages/Success";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -36,8 +43,9 @@ const client = new ApolloClient({
 
 const styles = {
   body: {
-    backgroundColor: "rgb(34,71,79)",
-    minHeight: "100vh"
+    backgroundColor: "#04293A",
+    minHeight: "100vh",
+    padding: "1vh 0"
   }
 }
 
@@ -47,24 +55,24 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
+        <Nav theme={theme} />
         <div style={styles.body}>
-          <Nav theme={theme} />
           <Routes>
             <Route
               path="/"
-              element={<Home theme={theme} />}
+              element={<Home />}
             />
-            {/* <Route
-              path="/:username"
+            <Route
+              path="/user/:username"
               element={<Profile />}
             />
             <Route
               path="/me"
               element={<Profile />}
-            /> */}
+            />
             <Route
               path="/recipe/:recipeId"
-              element={<SingleRecipe />}
+              element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
             />
             <Route
               path="/login"
@@ -74,9 +82,29 @@ function App() {
               path="/signup"
               element={<SignupForm />}
             />
+            <Route
+              path="/search"
+              element={Auth.loggedIn() ? <Search /> : <LoginForm />}
+            />
+            <Route
+              path="/search/:tag"
+              element={Auth.loggedIn() ? <Search /> : <LoginForm />}
+            />
+            <Route 
+              path="/donate" 
+              element={<Donate />} 
+            />
+            <Route 
+              path="/success" 
+              element={<Success />} 
+            />
+            <Route 
+                path="*" 
+                element={<NoMatch />} 
+              />
           </Routes>
-          {/* <Footer /> */}
         </div>
+        {/* <Footer /> */}
       </Router>
     </ApolloProvider>
   );

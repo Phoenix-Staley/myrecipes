@@ -27,6 +27,14 @@ const loggedOutItems = [
         key: "home"
     },
     {
+        label: (
+            <Link to="/search">
+                🔍
+            </Link>
+        ),
+        key: "search"
+    },
+    {
         // How this is rendered
         label: (
             <Link to="/login">
@@ -57,6 +65,14 @@ const loggedInItems = [
         key: "home"
     },
     {
+        label: (
+            <Link to="/search">
+                🔍
+            </Link>
+        ),
+        key: "search"
+    },
+    {
         // How this is rendered
         label: (
             <Link to="/me">
@@ -68,7 +84,7 @@ const loggedInItems = [
     },
     {
         label: (
-            <btn onClick={Auth.logout}>Logout</btn>
+            <a onClick={Auth.logout}>Logout</a>
         ),
         key: "logout"
     }

@@ -1,7 +1,7 @@
 {
-  "name": "mern-shopping",
+  "name": "myrecipes",
   "version": "1.0.0",
-  "description": "",
+  "description": "Social media for foodies",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -11,8 +11,8 @@
     "build": "cd client && npm run build"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Bhakti Khandagale, Sophie Miller, Phoenix Staley, Alejandro Villanueva",
+  "license": "Apache-2.0",
   "devDependencies": {
     "concurrently": "^5.1.0"
   },
