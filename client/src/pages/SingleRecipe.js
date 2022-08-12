@@ -35,7 +35,9 @@ const styles = {
         transform: "scale(2)",
         display: "inline",
         border: `ridge 3px ${colors.darkBlue}`,
-        borderRadius: "5px"
+        borderRadius: "5px",
+        height: "121px",
+        objectFit:"cover"
     },
     recipeTitle: {
         fontSize: "xx-large",
