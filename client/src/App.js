@@ -64,7 +64,7 @@ function App() {
               element={<Home />}
             />
             <Route
-              path="/user/:username"
+              path="/user/:userId"
               element={<Profile />}
             />
             <Route

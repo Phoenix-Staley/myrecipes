@@ -26,6 +26,8 @@ const resolvers = {
       if (context.user) {
         const user = await User.findById(userId)
           .populate("postedRecipes")
+          .populate("savedRecipes")
+          .populate({ path: "savedRecipes", populate: ["tags", "creator"] })
           .populate({ path: "postedRecipes", populate: ["tags", "creator"] });
         return user;
       }

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_MYSELF = gql`
-  query myself($id: ID!) {
+  query user($id: ID!) {
     user(_id: $id) {
       _id
       username
@@ -49,6 +49,20 @@ export const QUERY_USER = gql`
       lastName
       email
       postedRecipes {
+        _id
+        description
+        title
+        ingredients
+        steps
+        image
+        tags {
+          name
+        }
+        creator {
+          username
+        }
+      }
+      savedRecipes {
         _id
         description
         title
