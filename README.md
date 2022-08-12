@@ -14,7 +14,7 @@
 
 ## Description
 
-A social media network made for foodies. Where a user can post, or find recipes, to find new and exciting meals to make.
+A social media network made for foodies. Where a user can post or find recipes, so that they can find new and exciting meals to make.
 
 ---
 
@@ -39,13 +39,13 @@ https://abps-myrecipes.herokuapp.com/
 
 ## Installation
 
-To use the application, there are no installation guidelines, simply go to the deployed link. For developers, a person may clone the github repository and run npm i in the root folder.
+To use the application, there are no installation guidelines, simply go to the deployed link. For developers, you may clone the github repository and run npm i in the root folder.
 
 ---
 
 ## Usage
 
-The homepage displays the 10 most recently posted recipes. The displayed recipes can be clicked to see the full recipe. The user is presented with an option to create an account or log in to their account. Once logged in, users are able to save recipes to their profile to find later, as well as post a new recipe. Other user profiles can be viewed to see recipes that they have posted.
+The homepage displays the most recently posted recipes. The displayed recipes can be clicked to see the full recipe. The user is presented with an option to create an account or log in to their account. Once logged in, users are able to save recipes to their profile to find later, as well as post a new recipe. Other user profiles can be viewed to see recipes that they have posted.
 To see the logged in functionality without creating an account use the following demo credentials:
 
 email: demo@user.com
