@@ -59,8 +59,20 @@ const PostRecipeForm = () => {
   const onFinish = async (values) => {
     try {
       console.log(values);
-      let listedIngredients = formState.ingredients.split("/n");
-      let listedSteps = formState.steps.split("/n");
+      let listedIngredients = formState.ingredients.split("\n");
+      let listedSteps = formState.steps.split("\n");
+
+      console.log({
+        variables: {
+          description: formState.description,
+          title: formState.title,
+          ingredients: formState.ingredients,
+          steps: formState.steps,
+          image: imageUrl,
+          tags: formState.tags,
+          creator: Auth.getProfile().data._id,
+        },
+      });
 
       const mutationResponse = await postRecipe({
         variables: {
@@ -73,17 +85,6 @@ const PostRecipeForm = () => {
             tags: formState.tags,
             creator: Auth.getProfile().data._id,
           },
-        },
-      });
-      console.log({
-        variables: {
-          description: formState.description,
-          title: formState.title,
-          ingredients: formState.ingredients,
-          steps: formState.steps,
-          image: imageUrl,
-          tags: formState.tags,
-          creator: Auth.getProfile().data._id,
         },
       });
 
@@ -186,7 +187,7 @@ const PostRecipeForm = () => {
           hasFeedback
           onChange={handleChange}
         >
-          <textarea style={styles.textarea}>
+          <textarea name="ingredients" style={styles.textarea}>
             Add the ingredients of your recipe here, with each ingredient on a
             new line.
           </textarea>
@@ -198,7 +199,7 @@ const PostRecipeForm = () => {
           hasFeedback
           onChange={handleChange}
         >
-          <textarea style={styles.textarea}>
+          <textarea name="steps" style={styles.textarea}>
             Add the steps of your recipe here, with each step on a new line.
           </textarea>
         </Form.Item>
@@ -210,10 +211,10 @@ const PostRecipeForm = () => {
             tagObjs.map((tag) => {
               return (
                 <div key={tag._id} style={styles.tags}>
-                  {console.log(this)}
+                  {/* {console.log(this)} */}
                   <input
                     type="checkbox"
-                    onClick={() => pushTag(tag.name)}
+                    onClick={() => pushTag(tag._id)}
                   ></input>
                   <label>{tag.name}</label>
                 </div>
