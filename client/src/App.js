@@ -18,6 +18,7 @@ import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer"
 import Profile from "./pages/Profile";
 import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
@@ -30,7 +31,7 @@ import Success from "./pages/Success";
 import PostRecipeForm from "./pages/RecipeForm";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -65,16 +66,25 @@ function App() {
         <Nav theme={theme} />
         <div style={styles.body}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/user/:username" element={<Profile />} />
-            <Route path="/me" element={<Profile />} />
+            <Route
+              path="/"
+              element={<Home />}
+            />
+            <Route
+              path="/user/:userId"
+              element={<Profile />}
+            />
+            <Route
+              path="/me"
+              element={<Profile />}
+            />
             <Route
               path="/recipe/:recipeId"
               element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
             />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
-            <Route path="/recipeform" element={<PostRecipeForm />} />
+            <Route path="/recipeform" element={Auth.loggedIn() ? <PostRecipeForm /> : <LoginForm />} />
             <Route
               path="/search"
               element={Auth.loggedIn() ? <Search /> : <LoginForm />}
@@ -88,7 +98,7 @@ function App() {
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </ApolloProvider>
   );
