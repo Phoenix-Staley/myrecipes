@@ -66,8 +66,8 @@ const PostRecipeForm = () => {
         variables: {
           description: formState.description,
           title: formState.title,
-          ingredients: formState.ingredients,
-          steps: formState.steps,
+          ingredients: listedIngredients,
+          steps: listedSteps,
           image: imageUrl,
           tags: formState.tags,
           creator: Auth.getProfile().data._id,
