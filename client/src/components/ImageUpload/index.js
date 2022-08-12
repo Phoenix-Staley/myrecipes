@@ -43,7 +43,7 @@ function ImageUpload({getUrlFromS3}) {
         style={{color: "white"}}
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept="image/gif, image/jpeg, image/png"
         multiple
         onChange={handleChange}
       />
