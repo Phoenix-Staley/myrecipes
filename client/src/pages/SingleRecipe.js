@@ -141,7 +141,7 @@ const Recipe = () => {
                 />
                 <h3 style={styles.recipeTitle}>{currentRecipe.title}</h3>
                 <Link
-                    to={`/user/${currentRecipe.creator.username}`}
+                    to={`/user/${currentRecipe.creator._id}`}
                     style={styles.creatorLink}
                     className="creator"
                 >
