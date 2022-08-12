@@ -99,7 +99,8 @@ db.once("open", async () => {
         "Pour batter into greased loaf pan, and top with additional chocolate chips",
         "Bake for 50 – 60 min (or until a toothpick comes out clean)",
       ],
-      image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/",
+      image:
+        "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/37792800-6458-48fc-bb91-c290a1e77016-1660285080103",
       creator: seedUser1._id,
       tags: [tags[4]._id, tags[11]._id],
     },
@@ -128,7 +129,7 @@ db.once("open", async () => {
       image:
         "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/pizza.jpg",
       creator: seedUser1._id,
-      tags: [tags[4]._id],
+      tags: [tags[8]._id],
     },
     {
       description: "Soft avocado sliced on a piece of whole-grain toast",
@@ -179,7 +180,8 @@ db.once("open", async () => {
         "Shake, then double filter into a chilled coupe glass",
         "Note: if you do not have Demerara sugar for simple syrup, try to find some other minimally processed sugar for best flavor of the cocktail",
       ],
-      image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/",
+      image:
+        "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/01b78cb5-7215-49f7-9159-57cbe134dac4-1660285129190",
       creator: seedUser2._id,
       tags: [tags[12]._id],
     },
@@ -195,7 +197,8 @@ db.once("open", async () => {
         "Line a baking sheet with parchment, spread out asparagus and drizzle with olive oil.  Season with pepper to taste.",
         "Bake in oven for about 20 minutes.",
       ],
-      image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/",
+      image:
+        "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/b7458506-c130-4454-82fc-d18759578253-1660285148031",
       creator: seedUser2._id,
       tags: [tags[0]._id, tags[13]._id],
     },
@@ -218,7 +221,8 @@ db.once("open", async () => {
         "whisk together remaining ingredients to make a marinade.  Spread the marinade over the top of the salmon",
         "Place the planks (with fish and marinade on top) on the cool side of the grill, close the lid, and cook until the fish reaches 135 degF at the center (approximately 20 minutes, depending on grill setup)",
       ],
-      image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/",
+      image:
+        "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/e78404ac-472a-4ee5-ba54-310d495eeca3-1660285168006",
       creator: seedUser2._id,
       tags: [tags[8]._id, tags[14]._id],
     },
@@ -246,7 +250,8 @@ db.once("open", async () => {
         "Pour the batter into the prepped pan and bake for 25 minutes or until the cake has a crust on top and the center reads 200 F on an instant read thermometer",
         "Let cool before serving",
       ],
-      image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/",
+      image:
+        "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/c14e1e97-a121-484a-8a31-6d97ab81d087-1660285185432",
       creator: seedUser2._id,
       tags: [tags[4]._id, tags[11]._id],
     },
@@ -277,7 +282,8 @@ db.once("open", async () => {
         "After it has cooled enough, add the rest of the ingredients to the quinoa, tossing will to combine",
         "Note: Can be served warm, but is also great served chilled and can keep in the refrigerator for a few days.",
       ],
-      image: "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/",
+      image:
+        "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/c61873f0-8ee8-4e3f-8075-ae7cb98b6b07-1660285201432",
       creator: seedUser2._id,
       tags: [tags[0]._id, tags[2]._id, tags[13]._id],
     },
