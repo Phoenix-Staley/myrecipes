@@ -18,13 +18,6 @@ const colors = {
 const tabBorderStyle = "1px solid black";
 
 const styles = {
-  authError: {
-    width: "100%",
-    textAlign: "center",
-    marginTop: "20%",
-    color: colors.textColor,
-    fontSize: "x-large",
-  },
   header: {
     margin: "2vh auto",
     textAlign: "left",
@@ -37,10 +30,6 @@ const styles = {
   subtitle: {
     fontSize: "large",
   },
-  tabs: {
-    backgroundColor: colors.darkBlue,
-    margin: "0 auto",
-  },
   selected: {
     backgroundColor: colors.darkBlue,
     color: colors.textColor,
@@ -48,25 +37,8 @@ const styles = {
     width: "50%",
     cursor: "pointer",
   },
-  unselected: {
-    backgroundColor: colors.lightGold,
-    border: tabBorderStyle,
-    width: "50%",
-    cursor: "pointer",
-  },
-  list: {
-    backgroundColor: "cadetblue",
-    margin: "0 auto",
-    border: "0",
-    minHeight: "75vh",
-    borderRadius: "0 0 25px 25px",
-  },
-  recipeItem: {
-    borderBottom: "2px dashed black",
-  },
-  recipeName: {
+  statmentText: {
     color: "black",
-    textDecoration: "underline",
   },
   subtitle: {
     backgroundColor: colors.darkBlue,
@@ -251,7 +223,7 @@ const Donate = () => {
       {selectedCharity.name ? (
         <div style={styles.header} className="charityHeader">
           <h1>{selectedCharity.name}</h1>
-          <p style={styles.recipeName}>{selectedCharity.statement}</p>
+          <p style={styles.statmentText}>{selectedCharity.statement}</p>
           <a
             href={selectedCharity.url}
             target="_blank"

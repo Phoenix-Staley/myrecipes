@@ -72,7 +72,7 @@ const styles = {
         display: "flex",
         flexDirection: "flex-row",
         margin: "0 auto",
-        width: "30%",
+        width: "80%",
         padding: "1%",
         justifyContent: "center",
         backgroundColor: colors.darkBlue,
