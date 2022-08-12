@@ -189,10 +189,8 @@ const PostRecipeForm = () => {
           hasFeedback
           onChange={handleChange}
         >
-          <textarea name="ingredients" style={styles.textarea}>
-            Add the ingredients of your recipe here, with each ingredient on a
-            new line.
-          </textarea>
+          <textarea name="ingredients" style={styles.textarea}></textarea>
+          <p style={{color: "white"}}>Add the ingredients of your recipe here, with each ingredient on a new line.</p>
         </Form.Item>
 
         <Form.Item
@@ -201,9 +199,8 @@ const PostRecipeForm = () => {
           hasFeedback
           onChange={handleChange}
         >
-          <textarea name="steps" style={styles.textarea}>
-            Add the steps of your recipe here, with each step on a new line.
-          </textarea>
+          <textarea name="steps" style={styles.textarea}></textarea>
+          <p style={{color: "white"}}>Add the steps of your recipe here, with each step on a new line.</p>
         </Form.Item>
 
         <Form.Item label="Recipe Tags" name="tags">

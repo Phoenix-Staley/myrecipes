@@ -40,6 +40,7 @@ function ImageUpload({getUrlFromS3}) {
   return (
     <div>
       <input
+        style={{color: "white"}}
         ref={inputRef}
         type="file"
         accept="image/gif, image/jpeg, image/png"
