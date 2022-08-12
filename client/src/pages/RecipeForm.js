@@ -124,11 +124,12 @@ const PostRecipeForm = () => {
     console.log(formState.tags);
   };
 
-  //   const pushSteps = async (newSteps) => {
-  //     // let steps = formState.steps;
+  //   const pushSteps = async (value) => {
+  //     let steps = formState.steps;
 
-  //     newSteps.split("/n");
-  //     console.log(newSteps);
+  //     let addedSteps = value.split(/\r?\ n/);
+  //     steps.push(addedSteps);
+  //     console.log(steps);
   //   };
 
   return (
@@ -157,9 +158,8 @@ const PostRecipeForm = () => {
               message: "Please add a title for your recipe",
             },
           ]}
-          onChange={handleChange}
         >
-          <Input name="title" />
+          <Input name="title" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item
@@ -172,9 +172,8 @@ const PostRecipeForm = () => {
               message: "Please add a description of your recipe",
             },
           ]}
-          onChange={handleChange}
         >
-          <Input name="description" />
+          <Input name="description" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item label="Image" name="image" hasFeedback>
@@ -250,16 +249,3 @@ const PostRecipeForm = () => {
 };
 
 export default PostRecipeForm;
-
-{
-  /* <AutoComplete onChange={handleTagSearch} placeholder="Input here">
-              {tagsResult.map((suggestion) => (
-                <Option key={suggestion.name} value={suggestion.name}>
-                  {suggestion.name}
-                </Option>
-              ))}
-            </AutoComplete>{" "} */
-}
-{
-  /* <Input name="tags" onChange={handleTagSearch} /> */
-}

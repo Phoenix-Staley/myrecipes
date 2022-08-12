@@ -54,10 +54,6 @@ const typeDefs = gql`
     recipesByTag(tag: String!): [Recipe]
     tags: [Tag]
     getFileUploadURL: SingedURL
-
-    #recipe(userId: ID!): [Recipe]
-    #recipe(tagId: ID!): [Recipe]
-    #commented out the above two queries, because they were throwing an error when the server starts up "Error: Field "Query.recipe" can only be defined once."
   }
 
   type Mutation {
