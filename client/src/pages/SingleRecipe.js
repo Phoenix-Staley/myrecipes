@@ -35,7 +35,9 @@ const styles = {
         transform: "scale(2)",
         display: "inline",
         border: `ridge 3px ${colors.darkBlue}`,
-        borderRadius: "5px"
+        borderRadius: "5px",
+        height: "121px",
+        objectFit:"cover"
     },
     recipeTitle: {
         fontSize: "xx-large",
@@ -95,27 +97,39 @@ const styles = {
         color: "black",
         border: "0px",
         margin: "0 auto"
+    },
+    disabledBtn: {
+        width: "15%",
+        backgroundColor: "#068235",
+        color: "black",
+        border: "0px",
+        margin: "0 auto"
     }
 }
 
 const Recipe = () => {
-//   const { loading, data } = useQuery(QUERY_RECIPES);
-//   const recipes = data?.recipes || [];
     const { recipeId } = useParams();
     const { loading, data } = useQuery(QUERY_RECIPEBYID, {
-        variables: { recipeId }
+        variables: { id: recipeId }
     })
     const [isDescVisible, setIsDescVisible] = useState(true);
     const [areIngrVisible, setAreIngrVisible] = useState(true);
     const [areStepsVisible, setAreStepsVisible] = useState(true);
-    console.log(data);
+    const [isSaved, setIsSaved] = useState(false);
 
     const [saveRecipe] = useMutation(SAVE_RECIPE, {
         variables: {
             recipeId: recipeId,
-            userId: Auth.getProfile()._id
+            userId: Auth.getProfile().data._id
         }
     });
+
+    const handleSave = async () => {
+        await saveRecipe();
+        if (!isSaved) {
+            setIsSaved(true);
+        }
+    }
 
     const currentRecipe = data?.recipeById || {};
 
@@ -129,20 +143,23 @@ const Recipe = () => {
                 />
                 <h3 style={styles.recipeTitle}>{currentRecipe.title}</h3>
                 <Link
-                    to={`/user/${currentRecipe.creator.username}`}
+                    to={`/user/${currentRecipe.creator._id}`}
                     style={styles.creatorLink}
                     className="creator"
                 >
                     {currentRecipe.creator.username}
                 </Link>
                 
-                <Button style={styles.saveBtn} onClick={saveRecipe}>Save</Button>
+                <Button
+                    style={isSaved ? styles.disabledBtn : styles.saveBtn}
+                    onClick={handleSave}
+                >Save</Button>
                 
                 <p style={styles.tags}>
                     {currentRecipe.tags.map(
                         (tag, i) => <span className="tag" key={i}>
                         {i > 0 && ", "}
-                        <Link to={`/search/${tag}`}>{tag}</Link>
+                        <Link to={`/search/${tag.name}`}>{tag.name}</Link>
                         </span>
                     )}
                 </p>

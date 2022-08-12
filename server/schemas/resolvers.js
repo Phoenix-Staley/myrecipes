@@ -26,7 +26,10 @@ const resolvers = {
       if (context.user) {
         const user = await User.findById(userId)
           .populate("postedRecipes")
+          .populate("savedRecipes")
+          .populate({ path: "savedRecipes", populate: ["tags", "creator"] })
           .populate({ path: "postedRecipes", populate: ["tags", "creator"] });
+
         return user;
       }
 
@@ -40,7 +43,9 @@ const resolvers = {
       return await Tag.find();
     },
     recipeById: async (parent, { _id }) => {
-      return await Recipe.findById(_id).populate("tags").populate("creator");
+      return await Recipe.findById(_id)
+        .populate({ path: "tags", populate: "name" })
+        .populate({ path: "creator", populate: "username" });
     },
 
     recipesByTag: async (parent, { tag }) => {
@@ -64,6 +69,7 @@ const resolvers = {
       const user = await User.create(args);
       const token = signToken(user);
 
+      console.log("checking server");
       return { token, user };
     },
 

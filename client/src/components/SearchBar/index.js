@@ -49,7 +49,6 @@ const Search = () => {
             res = [];
         } else {
             res = allTags.filter((tag) => {
-                console.log(tag.name);
                 return tag.name.startsWith(value.toLowerCase());
             });
         }

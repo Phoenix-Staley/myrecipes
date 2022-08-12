@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
-import { BrowserRouter as Router, Routes, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,6 +18,7 @@ import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer"
 import Profile from "./pages/Profile";
 import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
@@ -22,6 +28,7 @@ import Search from "./pages/Search";
 import Results from "./pages/Results";
 import Donate from "./pages/Donate";
 import Success from "./pages/Success";
+import PostRecipeForm from "./pages/RecipeForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -46,9 +53,9 @@ const styles = {
   body: {
     backgroundColor: "#04293A",
     minHeight: "100vh",
-    padding: "1vh 0"
-  }
-}
+    padding: "1vh 0",
+  },
+};
 
 function App() {
   const [theme, changeTheme] = useState("dark");
@@ -64,7 +71,7 @@ function App() {
               element={<Home />}
             />
             <Route
-              path="/user/:username"
+              path="/user/:userId"
               element={<Profile />}
             />
             <Route
@@ -75,14 +82,9 @@ function App() {
               path="/recipe/:recipeId"
               element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
             />
-            <Route
-              path="/login"
-              element={<LoginForm />}
-            />
-            <Route
-              path="/signup"
-              element={<SignupForm />}
-            />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/recipeform" element={Auth.loggedIn() ? <PostRecipeForm /> : <LoginForm />} />
             <Route
               path="/search"
               element={Auth.loggedIn() ? <Search /> : <LoginForm />}
@@ -91,21 +93,12 @@ function App() {
               path="/search/:tag"
               element={Auth.loggedIn() ? <Results /> : <LoginForm />}
             />
-            <Route 
-              path="/donate" 
-              element={<Donate />} 
-            />
-            <Route 
-              path="/success" 
-              element={<Success />} 
-            />
-            <Route 
-                path="*" 
-                element={<NoMatch />} 
-              />
+            <Route path="/donate" element={<Donate />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="*" element={<NoMatch />} />
           </Routes>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </ApolloProvider>
   );

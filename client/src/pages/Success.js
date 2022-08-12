@@ -26,8 +26,8 @@ const Success = () => {
     <Result
       style={styles.contentStyle}
       status="success"
-      title={`Thank you for your donation to ${"insert charity name here"}`}
-      subTitle={`Order number: 2017182818828182881. You will be redirected to the home page in a few seconds, or you can click the button below to be redirected.`}
+      title={`Thank you for your donation!`}
+      subTitle={`You will be redirected to the home page in a few seconds, or you can click the button below to be redirected.`}
       extra={[
         <Button
           type="primary"
