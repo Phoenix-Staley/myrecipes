@@ -42,7 +42,7 @@ function ImageUpload({getUrlFromS3}) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/gif, image/jpeg, image/png"
+        accept="image/*"
         multiple
         onChange={handleChange}
       />
