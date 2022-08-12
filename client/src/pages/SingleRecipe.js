@@ -101,7 +101,7 @@ const styles = {
 const Recipe = () => {
     const { recipeId } = useParams();
     const { loading, data } = useQuery(QUERY_RECIPEBYID, {
-        variables: { recipeId }
+        variables: { id: recipeId }
     })
     const [isDescVisible, setIsDescVisible] = useState(true);
     const [areIngrVisible, setAreIngrVisible] = useState(true);
@@ -115,6 +115,23 @@ const Recipe = () => {
     });
 
     const currentRecipe = data?.recipeById || {};
+    console.log("currentRecipe:", currentRecipe);
+
+    // {
+    //     "__typename": "Recipe",
+    //     "_id": "62f2967d9cacc55efc4c3b6a",
+    //     "description": "A delicious western-style burger",
+    //     "title": "Western Comfort Burger",
+    //     "ingredients": [],
+    //     "steps": [],
+    //     "image": "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/burger.jpg",
+    //     "creator": {
+    //         "__typename": "User",
+    //         "_id": "62f2967d9cacc55efc4c3b55",
+    //         "username": "eliHolt"
+    //     },
+    //     "tags": []
+    // }
 
     return data ? (
         <main>
@@ -139,7 +156,7 @@ const Recipe = () => {
                     {currentRecipe.tags.map(
                         (tag, i) => <span className="tag" key={i}>
                         {i > 0 && ", "}
-                        <Link to={`/search/${tag}`}>{tag}</Link>
+                        <Link to={`/search/${tag.name}`}>{tag.name}</Link>
                         </span>
                     )}
                 </p>

@@ -84,8 +84,8 @@ export const QUERY_ALLRECIPES = gql`
 `;
 
 export const QUERY_RECIPEBYID = gql`
-  query recipeByID($recipeId: ID!) {
-    recipeById(recipeId: $recipeId) {
+  query ($id: ID!) {
+    recipeById(_id: $id) {
       _id
       description
       title
@@ -97,6 +97,7 @@ export const QUERY_RECIPEBYID = gql`
         username
       }
       tags {
+        _id
         name
       }
     }
