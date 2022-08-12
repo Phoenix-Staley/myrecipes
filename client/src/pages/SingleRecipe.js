@@ -95,6 +95,13 @@ const styles = {
         color: "black",
         border: "0px",
         margin: "0 auto"
+    },
+    disabledBtn: {
+        width: "15%",
+        backgroundColor: "#068235",
+        color: "black",
+        border: "0px",
+        margin: "0 auto"
     }
 }
 
@@ -106,32 +113,23 @@ const Recipe = () => {
     const [isDescVisible, setIsDescVisible] = useState(true);
     const [areIngrVisible, setAreIngrVisible] = useState(true);
     const [areStepsVisible, setAreStepsVisible] = useState(true);
+    const [isSaved, setIsSaved] = useState(false);
 
     const [saveRecipe] = useMutation(SAVE_RECIPE, {
         variables: {
             recipeId: recipeId,
-            userId: Auth.getProfile()._id
+            userId: Auth.getProfile().data._id
         }
     });
 
-    const currentRecipe = data?.recipeById || {};
-    console.log("currentRecipe:", currentRecipe);
+    const handleSave = async () => {
+        await saveRecipe();
+        if (!isSaved) {
+            setIsSaved(true);
+        }
+    }
 
-    // {
-    //     "__typename": "Recipe",
-    //     "_id": "62f2967d9cacc55efc4c3b6a",
-    //     "description": "A delicious western-style burger",
-    //     "title": "Western Comfort Burger",
-    //     "ingredients": [],
-    //     "steps": [],
-    //     "image": "https://myrecipesbucket-abps.s3.us-west-2.amazonaws.com/burger.jpg",
-    //     "creator": {
-    //         "__typename": "User",
-    //         "_id": "62f2967d9cacc55efc4c3b55",
-    //         "username": "eliHolt"
-    //     },
-    //     "tags": []
-    // }
+    const currentRecipe = data?.recipeById || {};
 
     return data ? (
         <main>
@@ -150,7 +148,10 @@ const Recipe = () => {
                     {currentRecipe.creator.username}
                 </Link>
                 
-                <Button style={styles.saveBtn} onClick={saveRecipe}>Save</Button>
+                <Button
+                    style={isSaved ? styles.disabledBtn : styles.saveBtn}
+                    onClick={handleSave}
+                >Save</Button>
                 
                 <p style={styles.tags}>
                     {currentRecipe.tags.map(
