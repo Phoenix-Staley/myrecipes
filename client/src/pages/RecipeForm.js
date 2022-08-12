@@ -24,12 +24,13 @@ const styles = {
 };
 
 const PostRecipeForm = () => {
+  const [imageUrl, setImageUrl] = useState("");
   const [formState, setFormState] = useState({
     description: "",
     title: "",
     ingredients: [],
     steps: [],
-    image: "",
+    image: imageUrl,
     tags: [],
     creator: "",
   });
@@ -68,7 +69,7 @@ const PostRecipeForm = () => {
             title: formState.title,
             ingredients: listedIngredients,
             steps: listedSteps,
-            image: formState.image,
+            image: imageUrl,
             tags: formState.tags,
             creator: Auth.getProfile().data._id,
           },
@@ -80,7 +81,7 @@ const PostRecipeForm = () => {
           title: formState.title,
           ingredients: formState.ingredients,
           steps: formState.steps,
-          image: formState.image,
+          image: imageUrl,
           tags: formState.tags,
           creator: Auth.getProfile().data._id,
         },
@@ -175,8 +176,8 @@ const PostRecipeForm = () => {
           <Input name="description" />
         </Form.Item>
 
-        <Form.Item label="Image" name="image" accept=".png" hasFeedback>
-          <ImageUpload></ImageUpload>
+        <Form.Item label="Image" name="image" hasFeedback>
+          <ImageUpload getUrlFromS3={setImageUrl} />
         </Form.Item>
 
         <Form.Item
