@@ -56,7 +56,7 @@ password: password
 
 ## Screenshots
 
-![A gif of the deployed application](./assets/{image_goes_here}.gif "A gif of the myrecipes website being used.")
+![A gif of the deployed application](./assets/images/myrecipesDemo.gif "A gif of the myrecipes website being used.")
 
 ---
 
