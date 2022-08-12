@@ -59,6 +59,7 @@ const styles = {
 
 function App() {
   const [theme, changeTheme] = useState("dark");
+  document.title = "myrecipes";
 
   return (
     <ApolloProvider client={client}>
