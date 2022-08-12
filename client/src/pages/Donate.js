@@ -252,7 +252,13 @@ const Donate = () => {
         <div style={styles.header} className="charityHeader">
           <h1>{selectedCharity.name}</h1>
           <p style={styles.recipeName}>{selectedCharity.statement}</p>
-          <a href={selectedCharity.url}>{selectedCharity.name} Homepage</a>
+          <a
+            href={selectedCharity.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {selectedCharity.name} Homepage
+          </a>
           <br />
           <img
             src={selectedCharity.logo}
