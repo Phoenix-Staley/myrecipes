@@ -136,11 +136,11 @@ const Recipe = () => {
     return data ? (
         <main>
             <div style={styles.fullRecipe} className="contentHolder recipe">
-                <img
+                {currentRecipe.image ? <img
                     width={192}
                     src={currentRecipe.image}
                     style={styles.image}
-                />
+                /> : <></>}
                 <h3 style={styles.recipeTitle}>{currentRecipe.title}</h3>
                 <Link
                     to={`/user/${currentRecipe.creator._id}`}
