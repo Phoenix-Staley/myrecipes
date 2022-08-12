@@ -73,6 +73,14 @@ const loggedInItems = [
         key: "search"
     },
     {
+        label: (
+            <Link to="/recipeform">
+                ➕
+            </Link>
+        ),
+        key: "post"
+    },
+    {
         // How this is rendered
         label: (
             <Link to="/me">

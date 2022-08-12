@@ -18,6 +18,7 @@ import Auth from "./utils/auth";
 
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
+import Footer from "./components/Footer"
 import Profile from "./pages/Profile";
 import NoMatch from "./pages/NoMatch";
 import LoginForm from "./pages/LoginForm";
@@ -97,7 +98,7 @@ function App() {
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </ApolloProvider>
   );
