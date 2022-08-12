@@ -39,9 +39,8 @@ const styles = {
 
 const Home = () => {
   const { data } = useQuery(QUERY_ALLRECIPES);
-  console.log("data:", data);
   const recipes = data?.allRecipes || [];
-  console.log("recipes", recipes);
+  console.log("recipes:", recipes);
 
   return (
     <main>
@@ -57,10 +56,13 @@ const Home = () => {
                     bordered
                     dataSource={recipes}
                     renderItem={(recipe) => (
-                            <List.Item style={styles.recipeItem}>
-                                <Link to={`/recipe/${recipe._id}`} style={styles.recipeItem}>{recipe.title} -- {recipe.tags[0].name}</Link>
-                            </List.Item>
-                        )
+                        // For each recipe, render an item that shows the title and the first tag, if it exists
+                        <List.Item style={styles.recipeItem}>
+                          <Link to={`/recipe/${recipe._id}`} style={styles.recipeItem}>
+                            {recipe.title}{recipe.tags[0] ? ` -- ${recipe.tags[0].name}` : null}
+                          </Link>
+                        </List.Item>
+                      )
                     }
                 />
             </div>
