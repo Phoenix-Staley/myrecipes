@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
-import { BrowserRouter as Router, Routes, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -22,9 +27,10 @@ import Search from "./pages/Search";
 import Results from "./pages/Results";
 import Donate from "./pages/Donate";
 import Success from "./pages/Success";
+import PostRecipeForm from "./pages/RecipeForm";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -46,9 +52,9 @@ const styles = {
   body: {
     backgroundColor: "#04293A",
     minHeight: "100vh",
-    padding: "1vh 0"
-  }
-}
+    padding: "1vh 0",
+  },
+};
 
 function App() {
   const [theme, changeTheme] = useState("dark");
@@ -59,30 +65,16 @@ function App() {
         <Nav theme={theme} />
         <div style={styles.body}>
           <Routes>
-            <Route
-              path="/"
-              element={<Home />}
-            />
-            <Route
-              path="/user/:username"
-              element={<Profile />}
-            />
-            <Route
-              path="/me"
-              element={<Profile />}
-            />
+            <Route path="/" element={<Home />} />
+            <Route path="/user/:username" element={<Profile />} />
+            <Route path="/me" element={<Profile />} />
             <Route
               path="/recipe/:recipeId"
               element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
             />
-            <Route
-              path="/login"
-              element={<LoginForm />}
-            />
-            <Route
-              path="/signup"
-              element={<SignupForm />}
-            />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/recipeform" element={<PostRecipeForm />} />
             <Route
               path="/search"
               element={Auth.loggedIn() ? <Search /> : <LoginForm />}
@@ -91,18 +83,9 @@ function App() {
               path="/search/:tag"
               element={Auth.loggedIn() ? <Results /> : <LoginForm />}
             />
-            <Route 
-              path="/donate" 
-              element={<Donate />} 
-            />
-            <Route 
-              path="/success" 
-              element={<Success />} 
-            />
-            <Route 
-                path="*" 
-                element={<NoMatch />} 
-              />
+            <Route path="/donate" element={<Donate />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="*" element={<NoMatch />} />
           </Routes>
         </div>
         {/* <Footer /> */}
