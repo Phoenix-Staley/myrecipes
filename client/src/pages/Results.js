@@ -48,7 +48,7 @@ const Search = () => {
     return (
         <main>
             <SearchBar />
-            {loading ? <h3>Loading...</h3> : (
+            {loading ? <></> : (
                 <div style={styles.contentHolder} className="contentHolder">
                     <List
                         style={styles.recipeList}
