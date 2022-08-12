@@ -65,7 +65,6 @@ function App() {
         <Nav theme={theme} />
         <div style={styles.body}>
           <Routes>
-<<<<<<< HEAD
             <Route
               path="/"
               element={<Home />}
@@ -78,18 +77,13 @@ function App() {
               path="/me"
               element={<Profile />}
             />
-=======
-            <Route path="/" element={<Home />} />
-            <Route path="/user/:username" element={<Profile />} />
-            <Route path="/me" element={<Profile />} />
->>>>>>> Develop
             <Route
               path="/recipe/:recipeId"
               element={Auth.loggedIn() ? <SingleRecipe /> : <LoginForm />}
             />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
-            <Route path="/recipeform" element={<PostRecipeForm />} />
+            <Route path="/recipeform" element={Auth.loggedIn() ? <PostRecipeForm /> : <LoginForm />} />
             <Route
               path="/search"
               element={Auth.loggedIn() ? <Search /> : <LoginForm />}
