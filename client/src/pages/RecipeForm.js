@@ -111,11 +111,13 @@ const PostRecipeForm = () => {
     });
   };
 
-  const pushTag = async (tagName) => {
+  const updateTagArr = async (tagId) => {
     let tagArr = formState.tags;
-
-    tagArr.push(tagName);
-
+    if (tagArr.indexOf(tagId) === -1) {
+      tagArr.push(tagId);
+    } else {
+      tagArr.splice(tagArr.indexOf(tagId), 1);
+    }
     await setFormState({
       ...formState,
       tags: tagArr,
@@ -214,7 +216,7 @@ const PostRecipeForm = () => {
                   {/* {console.log(this)} */}
                   <input
                     type="checkbox"
-                    onClick={() => pushTag(tag._id)}
+                    onClick={() => updateTagArr(tag._id)}
                   ></input>
                   <label>{tag.name}</label>
                 </div>
