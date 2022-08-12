@@ -7,6 +7,7 @@ import { POST_RECIPE } from "../utils/mutations";
 import { QUERY_TAGS } from "../utils/queries";
 import IngredientList from "../components/IngredientList";
 import StepsList from "../components/StepsList";
+import ImageUpload from "../components/ImageUpload";
 
 const { Option } = AutoComplete;
 
@@ -14,27 +15,32 @@ const styles = {
   form: {
     marginTop: "25vh",
   },
+  textarea: {
+    width: "100%",
+  },
+  tags: {
+    color: "white",
+  },
 };
 
 const PostRecipeForm = () => {
+  const [imageUrl, setImageUrl] = useState("");
   const [formState, setFormState] = useState({
     description: "",
     title: "",
-    ingredients: "",
-    steps: "",
-    image: "",
-    tags: "",
+    ingredients: [],
+    steps: [],
+    image: imageUrl,
+    tags: [],
     creator: "",
   });
-
-  const { data } = useQuery(QUERY_TAGS);
-  const allTags = data?.tags || [];
-  const [tagsResult, setTagsResult] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [postRecipe, { error }] = useMutation(POST_RECIPE);
+
+  const { loading, data } = useQuery(QUERY_TAGS);
+  const tagObjs = data?.tags || [];
 
   const navigate = useNavigate();
 
@@ -52,27 +58,36 @@ const PostRecipeForm = () => {
 
   const onFinish = async (values) => {
     try {
+      console.log(values);
+      let listedIngredients = formState.ingredients.split("/n");
+      let listedSteps = formState.steps.split("/n");
+
       const mutationResponse = await postRecipe({
+        variables: {
+          recipeData: {
+            description: formState.description,
+            title: formState.title,
+            ingredients: listedIngredients,
+            steps: listedSteps,
+            image: imageUrl,
+            tags: formState.tags,
+            creator: Auth.getProfile().data._id,
+          },
+        },
+      });
+      console.log({
         variables: {
           description: formState.description,
           title: formState.title,
           ingredients: formState.ingredients,
           steps: formState.steps,
-          image: formState.image,
+          image: imageUrl,
           tags: formState.tags,
-          creator: Auth.getProfile().data.username,
+          creator: Auth.getProfile().data._id,
         },
       });
 
-      setFormState({
-        description: "",
-        title: "",
-        ingredients: "",
-        steps: "",
-        image: "",
-        tags: "",
-        creator: "",
-      });
+      redirect();
     } catch (err) {
       showModal();
     }
@@ -88,11 +103,32 @@ const PostRecipeForm = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(name, value);
     setFormState({
       ...formState,
       [name]: value,
     });
   };
+
+  const pushTag = async (tagName) => {
+    let tagArr = formState.tags;
+
+    tagArr.push(tagName);
+
+    await setFormState({
+      ...formState,
+      tags: tagArr,
+    });
+
+    console.log(formState.tags);
+  };
+
+  //   const pushSteps = async (newSteps) => {
+  //     // let steps = formState.steps;
+
+  //     newSteps.split("/n");
+  //     console.log(newSteps);
+  //   };
 
   return (
     <div className="formHolder">
@@ -111,20 +147,6 @@ const PostRecipeForm = () => {
       >
         <h3 className="formHeader">Post a New Recipe:</h3>
         <Form.Item
-          label="Description"
-          name="description"
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please add a description of your recipe",
-            },
-          ]}
-        >
-          <Input name="description" onChange={handleChange} />
-        </Form.Item>
-
-        <Form.Item
           label="Title"
           name="title"
           hasFeedback
@@ -134,43 +156,71 @@ const PostRecipeForm = () => {
               message: "Please add a title for your recipe",
             },
           ]}
+          onChange={handleChange}
         >
-          <Input name="title" onChange={handleChange} />
+          <Input name="title" />
         </Form.Item>
 
         <Form.Item
-          label="Image"
-          name="image"
-          accept=".png"
+          label="Description"
+          name="description"
           hasFeedback
           rules={[
             {
-              message: "Please add an image of your recipe",
+              required: true,
+              message: "Please add a description of your recipe",
             },
           ]}
+          onChange={handleChange}
         >
-          <Input name="image" onChange={handleChange} />
+          <Input name="description" />
         </Form.Item>
 
-        <Form.Item label="Ingredients" name="ingredients" hasFeedback>
-          <IngredientList />
+        <Form.Item label="Image" name="image" hasFeedback>
+          <ImageUpload getUrlFromS3={setImageUrl} />
         </Form.Item>
 
-        <Form.Item label="Steps" name="steps" hasFeedback>
-          <StepsList></StepsList>
+        <Form.Item
+          label="Ingredients"
+          name="ingredients"
+          hasFeedback
+          onChange={handleChange}
+        >
+          <textarea style={styles.textarea}>
+            Add the ingredients of your recipe here, with each ingredient on a
+            new line.
+          </textarea>
+        </Form.Item>
+
+        <Form.Item
+          label="Steps"
+          name="steps"
+          hasFeedback
+          onChange={handleChange}
+        >
+          <textarea style={styles.textarea}>
+            Add the steps of your recipe here, with each step on a new line.
+          </textarea>
         </Form.Item>
 
         <Form.Item label="Recipe Tags" name="tags">
-          {/* <AutoComplete onChange={handleTagSearch} placeholder="Input here">
-            {tagsResult.map((suggestion) => (
-              <Option key={suggestion.name} value={suggestion.name}>
-                {suggestion.name}
-              </Option>
-            ))}
-          </AutoComplete> */}
-          {/* <Input name="tags" onChange={handleTagSearch} /> */}
+          {loading ? (
+            <div>loading...</div>
+          ) : (
+            tagObjs.map((tag) => {
+              return (
+                <div key={tag._id} style={styles.tags}>
+                  {console.log(this)}
+                  <input
+                    type="checkbox"
+                    onClick={() => pushTag(tag.name)}
+                  ></input>
+                  <label>{tag.name}</label>
+                </div>
+              );
+            })
+          )}
         </Form.Item>
-
         <Form.Item
           wrapperCol={{
             offset: 8,
@@ -199,3 +249,16 @@ const PostRecipeForm = () => {
 };
 
 export default PostRecipeForm;
+
+{
+  /* <AutoComplete onChange={handleTagSearch} placeholder="Input here">
+              {tagsResult.map((suggestion) => (
+                <Option key={suggestion.name} value={suggestion.name}>
+                  {suggestion.name}
+                </Option>
+              ))}
+            </AutoComplete>{" "} */
+}
+{
+  /* <Input name="tags" onChange={handleTagSearch} /> */
+}

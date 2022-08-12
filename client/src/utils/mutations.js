@@ -39,38 +39,9 @@ export const ADD_USER = gql`
 `;
 
 export const POST_RECIPE = gql`
-  mutation postRecipe(
-    $userId: ID!
-    $description: String!
-    $title: String!
-    $ingredients: [String!]
-    $steps: [String!]
-    $image: String!
-    $tags: [String!]
-    $creator: ID!
-  ) {
-    postRecipe(
-      userId: $userId
-      description: $description
-      title: $title
-      ingredients: $ingredients
-      steps: $steps
-      image: $image
-      tags: $tags
-      creator: $creator
-    ) {
+  mutation ($recipeData: recipeInput) {
+    postRecipe(recipeData: $recipeData) {
       _id
-      description
-      title
-      ingredients
-      steps
-      image
-      creator {
-        username
-      }
-      tags {
-        name
-      }
     }
   }
 `;

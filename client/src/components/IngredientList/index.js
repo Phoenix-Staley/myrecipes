@@ -23,10 +23,11 @@ const IngredientList = () => {
     editInputRef.current?.focus();
   }, [inputValue]);
 
-  const handleClose = (removedIngredient) => {
-    const newIngredient = ingredientItem.filter(
-      (List) => List !== removedIngredient
-    );
+  const handleClose = (addedIngredient) => {
+    console.log(addedIngredient);
+    const newIngredient = [];
+    newIngredient.push(addedIngredient);
+
     console.log(newIngredient);
     setIngredientItem(newIngredient);
   };
@@ -58,6 +59,7 @@ const IngredientList = () => {
     setIngredientItem(newIngredient);
     setEditInputIndex(-1);
     setInputValue("");
+    console.log(newIngredient);
   };
 
   return (
@@ -73,7 +75,8 @@ const IngredientList = () => {
               value={editInputValue}
               onChange={handleEditInputChange}
               onBlur={handleEditInputConfirm}
-              onPressEnter={handleEditInputConfirm}
+              onPressEnter={() => handleClose(this.value)}
+              // onClose={() => console.log(this.value)}
             />
           );
         }
@@ -83,7 +86,7 @@ const IngredientList = () => {
             className="edit-tag"
             key={ingredient}
             closable={index !== 0}
-            onClose={() => handleClose(ingredient)}
+            // onClose={() => handleClose(ingredient)}
           >
             <span
               onDoubleClick={(e) => {
