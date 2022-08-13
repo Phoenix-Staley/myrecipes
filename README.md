@@ -30,9 +30,6 @@ https://abps-myrecipes.herokuapp.com/
 - [Deployment](#deployment)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Contribution](#contribution)
-- [Tests](#tests)
 - [Questions](#questions)
 
 ---
@@ -51,24 +48,6 @@ To see the logged in functionality without creating an account use the following
 email: demo@user.com
 
 password: password
-
----
-
-## Screenshots
-
-![A gif of the deployed application](./assets/images/myrecipesDemo.gif "A gif of the myrecipes website being used.")
-
----
-
-## Contribution
-
-There are no contribution guidelines for this project
-
----
-
-## Tests
-
-There are no tests for this application
 
 ---
 
